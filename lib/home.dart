@@ -1,5 +1,7 @@
 import 'package:akbas_bas_eventfinderapp/membership.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutterfire_ui/database.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,6 +11,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final usersQuery = FirebaseDatabase.instance.ref('users').orderByChild('nickName');
+
+  // FirebaseDatabase database = FirebaseDatabase.instance;
+  // // DatabaseReference ref = FirebaseDatabase.instance.ref("users/1");
+  // final ref = FirebaseDatabase.instance.ref();
+  // final snapshot = await ref.child('users/1').get();
+  // if (snapshot.exists) {
+  // print('ramazan');
+  // print(snapshot.value);
+  // } else {
+  // print('No data available.');
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,6 +41,16 @@ class _HomePageState extends State<HomePage> {
                   context: context),
 
               //FILTER COLUMN2
+            FirebaseDatabaseListView(
+              query: usersQuery,
+              pageSize: 20,
+              shrinkWrap: true,
+              itemBuilder: (context, snapshot) {
+                Map<String, dynamic> user = snapshot.value as Map<String, dynamic>;
+
+                return Text('User name is}');
+              },
+            ),
 
               //MOST PREFFERED COLUMN3-4
               buildMostPreferredText(),
@@ -95,6 +120,15 @@ Widget buildBasBilet(
 }
 
 Widget buildMostPreferredText() {
+  // final FirebaseDatabase firebaseDatabase;
+  // final ref = FirebaseDatabase.instance.ref();
+  // final snapshot = await ref.child('users/1').get();
+  // if (snapshot.exists) {
+  //   print(snapshot.value);
+  // } else {
+  //   print('No data available.');
+  // }
+
   return Padding(
     padding: EdgeInsets.only(top: 27),
     child: Text(

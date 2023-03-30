@@ -16,9 +16,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseDatabase database = FirebaseDatabase.instance;
-
-
   runApp(MyApp());
 
 }
