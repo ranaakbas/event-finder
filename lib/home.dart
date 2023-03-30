@@ -98,7 +98,7 @@ Widget buildMostPreferredText() {
   return Padding(
     padding: EdgeInsets.only(top: 27),
     child: Text(
-      "Most Preferred Events",
+      "Most Preferred Events in TR",
       style: TextStyle(
           color: Color(0xFF0A1034), fontSize: 18, fontWeight: FontWeight.bold),
     ),
