@@ -112,7 +112,7 @@ Widget buildMostPreferred() {
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         height: 125.0,
         child: ListView(
-          // This next line does the trick.
+          // This next line does the trick..
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             Container(
