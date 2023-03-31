@@ -11,62 +11,78 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final usersQuery = FirebaseDatabase.instance.ref('users').orderByChild('nickName');
+  String nickNameText = "Hello";
+  FirebaseDatabase database = FirebaseDatabase.instance;
 
-  // FirebaseDatabase database = FirebaseDatabase.instance;
-  // // DatabaseReference ref = FirebaseDatabase.instance.ref("users/1");
-  // final ref = FirebaseDatabase.instance.ref();
-  // final snapshot = await ref.child('users/1').get();
-  // if (snapshot.exists) {
-  // print('ramazan');
-  // print(snapshot.value);
-  // } else {
-  // print('No data available.');
-  // }
+  @override
+  void initState() {
+    super.initState();
+    activateListeners();
+  }
+
+  void activateListeners() {
+    database.ref().child("users/1/nickName").onValue.listen((event) {
+      final Object? value = event.snapshot.value;
+
+      setState(() {
+        nickNameText = "Hello $value";
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
             children: [
-              //BAŞBİLET COLUMN1
-              buildBasBilet(
-                  iconPerson: Icons.person,
-                  widget: MembershipPage(),
-                  context: context),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //BAŞBİLET COLUMN1
+                  buildBasBilet(
+                      iconPerson: Icons.person,
+                      widget: MembershipPage(),
+                      context: context),
 
-              //FILTER COLUMN2
-            FirebaseDatabaseListView(
-              query: usersQuery,
-              pageSize: 20,
-              shrinkWrap: true,
-              itemBuilder: (context, snapshot) {
-                Map<String, dynamic> user = snapshot.value as Map<String, dynamic>;
+                  //FILTER COLUMN2
+                  //MOST PREFFERED COLUMN3-4
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      buildNickNameText(nickNameText),
+                      ElevatedButton(
+                          onPressed: () async {
+                            await userRef.set({
+                              "nickName": "Ramazan",
+                            });
+                            print('added kamil');
+                          },
+                          child: Text("Edit Name"))
+                    ],
+                  ),
+                  buildMostPreferredText(),
+                  buildMostPreferred(),
+                  //UPCOMING EVENTS COLUMN5-6
+                  buildUpcomingText(),
+                  buildUpcoming(),
 
-                return Text('User name is}');
-              },
-            ),
+                  buildCategories(),
+                  //COLUMN 8 MUSIC ARTS
+                  buildMusicArts(
+                      textMusic: "Music", textArts: "Arts", context: context),
 
-              //MOST PREFFERED COLUMN3-4
-              buildMostPreferredText(),
-              buildMostPreferred(),
-              //UPCOMING EVENTS COLUMN5-6
-              buildUpcomingText(),
-              buildUpcoming(),
-
-              buildCategories(),
-              //COLUMN 8 MUSIC ARTS
-              buildMusicArts(
-                  textMusic: "Music", textArts: "Arts", context: context),
-
-              //COLUMN 9 SPORTS EDUCATION
-              buildSportsMore(
-                  textSports: "Sport", textMore: "More", context: context),
+                  //COLUMN 9 SPORTS EDUCATION
+                  buildSportsMore(
+                      textSports: "Sport", textMore: "More", context: context),
+                ],
+              )
             ],
           ),
         ),
@@ -86,7 +102,7 @@ Widget buildBasBilet(
       }));
     },
     child: Padding(
-      padding: const EdgeInsets.only(top: 24.0, bottom: 10),
+      padding: const EdgeInsets.only(top: 24.0, bottom: 3),
       child: Row(
         children: [
           Text(
@@ -119,20 +135,22 @@ Widget buildBasBilet(
   );
 }
 
-Widget buildMostPreferredText() {
-  // final FirebaseDatabase firebaseDatabase;
-  // final ref = FirebaseDatabase.instance.ref();
-  // final snapshot = await ref.child('users/1').get();
-  // if (snapshot.exists) {
-  //   print(snapshot.value);
-  // } else {
-  //   print('No data available.');
-  // }
-
+Widget buildNickNameText(nickNameText) {
   return Padding(
-    padding: EdgeInsets.only(top: 27),
+    padding: EdgeInsets.only(top: 10),
     child: Text(
-      "Most Preferred Events in TR",
+      nickNameText,
+      style: TextStyle(
+          color: Color(0xFF0A1034), fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+Widget buildMostPreferredText() {
+  return Padding(
+    padding: EdgeInsets.only(top: 21),
+    child: Text(
+      "Most Preferred Events",
       style: TextStyle(
           color: Color(0xFF0A1034), fontSize: 18, fontWeight: FontWeight.bold),
     ),
@@ -144,7 +162,7 @@ Widget buildMostPreferred() {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 125.0,
+        height: 110.0,
         child: ListView(
           // This next line does the trick..
           scrollDirection: Axis.horizontal,
@@ -193,7 +211,7 @@ Widget buildUpcoming() {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 125.0,
+        height: 110.0,
         child: ListView(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
@@ -227,7 +245,7 @@ Widget buildUpcoming() {
 
 Widget buildCategories() {
   return Padding(
-      padding: EdgeInsets.only(top: 35, bottom: 10),
+      padding: EdgeInsets.only(top: 15, bottom: 10),
       child: Text(
         "Categories",
         style: TextStyle(
