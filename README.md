@@ -1,16 +1,20 @@
-# akbas_bas_eventfinderapp
+Event Finder Flutter project.
 
-A new Flutter project.
+## Screen Shot
 
-## Getting Started
+
+<img src="https://github.com/ranaakbas/event-finder/blob/main/HomeSS.png" data-canonical-src="https://github.com/ranaakbas/event-finder/blob/main/HomeSS.png" width="200" height="auto" />
+
+<img src="https://github.com/ranaakbas/event-finder/blob/main/SignSS.png" data-canonical-src="https://github.com/ranaakbas/event-finder/blob/main/SignSS.png" width="200" height="auto" />
+
 
 This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+Features
+- Home page which list Events
+- Home page which list Categories
+- Firebase Real Time Database Connected
+- We can edit nickName with Edit Button
+- Sign page style added.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
