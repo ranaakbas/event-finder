@@ -33,7 +33,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -52,29 +51,17 @@ class _HomePageState extends State<HomePage> {
 
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      buildNickNameText(nickNameText),
-                      ElevatedButton(
-                          onPressed: () async {
-                            await userRef.set({
-                              "nickName": "Ramazan",
-                            });
-                            print('added kamil');
-                          },
-                          child: Text("Edit Name"))
-                    ],
-                  ),
+
+                  buildNickNameText(nickNameText),
+                  //
                   buildMostPreferredText(),
                   buildMostPreferred(),
-                  //UPCOMING EVENTS COLUMN5-6
+                  // //UPCOMING EVENTS COLUMN5-6
                   buildUpcomingText(),
                   buildUpcoming(),
-
+                  //
                   buildCategories(),
-                  //COLUMN 8 MUSIC ARTS
+                  // //COLUMN 8 MUSIC ARTS
                   buildMusicArts(
                       textMusic: "Music", textArts: "Arts", context: context),
 
@@ -141,14 +128,14 @@ Widget buildNickNameText(nickNameText) {
     child: Text(
       nickNameText,
       style: TextStyle(
-          color: Color(0xFF0A1034), fontSize: 18, fontWeight: FontWeight.bold),
+          color: Color(0xFF0A1034), fontSize: 19, fontWeight: FontWeight.bold),
     ),
   );
 }
 
 Widget buildMostPreferredText() {
   return Padding(
-    padding: EdgeInsets.only(top: 21),
+    padding: EdgeInsets.only(top: 19),
     child: Text(
       "Most Preferred Events",
       style: TextStyle(
@@ -275,40 +262,44 @@ Widget buildMusicArts(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
             height: 100.0,
             width: 160.0,
             padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
             decoration: BoxDecoration(
-              color: Color(0xFFE0ECF8),
               borderRadius: BorderRadius.circular(6),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/music.jpg"),
+                  fit: BoxFit.cover),
             ),
-            child: Center(
-              child: Text(
-                textMusic,
-                style: TextStyle(
-                    color: Color(0xFF0A1034),
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
+            child:Center(
+            child: Text(
+              textMusic,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+            ),),
+          ),),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
             height: 100.0,
             width: 160.0,
             padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
             decoration: BoxDecoration(
               color: Color(0xFFE0ECF8),
               borderRadius: BorderRadius.circular(6),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/arts.jpg"),
+                  fit: BoxFit.cover),
             ),
             child: Center(
               child: Text(
                 textArts,
                 style: TextStyle(
-                    color: Color(0xFF0A1034),
+                    color: Colors.white,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w900),
               ),
             ),
           ),
@@ -340,40 +331,46 @@ Widget buildSportsMore(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
             height: 100.0,
             width: 160.0,
             padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
             decoration: BoxDecoration(
               color: Color(0xFFE0ECF8),
               borderRadius: BorderRadius.circular(6),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/sports.png"),
+                  fit: BoxFit.cover),
             ),
             child: Center(
               child: Text(
                 textSports,
                 style: TextStyle(
-                    color: Color(0xFF0A1034),
+                    color: Colors.white,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w900),
               ),
             ),
           ),
           Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0),
+            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
             height: 100.0,
             width: 160.0,
             padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
             decoration: BoxDecoration(
               color: Color(0xFFE0ECF8),
               borderRadius: BorderRadius.circular(6),
+              image: DecorationImage(
+                  image: AssetImage("assets/images/education&more.jpg"),
+                  fit: BoxFit.cover),
             ),
             child: Center(
               child: Text(
                 textMore,
                 style: TextStyle(
-                    color: Color(0xFF0A1034),
+                    color: Colors.white,
                     fontSize: 18,
-                    fontWeight: FontWeight.bold),
+                    fontWeight: FontWeight.w900),
               ),
             ),
           ),
