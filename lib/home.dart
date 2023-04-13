@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                   buildNavigation(
                       text: "Sport", widget: SportPage(), image: AssetImage('assets/images/sports.png'), context: context),
                   buildNavigation(
-                      text: "Education&More", widget: MorePage(), image: AssetImage('assets/images/education&more.jpg'), context: context),
+                      text: "Education&More", widget: EducationMorePage(), image: AssetImage('assets/images/education&more.jpg'), context: context),
 
                 ],
               )
