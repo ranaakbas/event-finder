@@ -1,7 +1,11 @@
 import 'package:akbas_bas_eventfinderapp/membership.dart';
+import 'package:akbas_bas_eventfinderapp/music.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
+import 'package:akbas_bas_eventfinderapp/art.dart';
+import 'package:akbas_bas_eventfinderapp/sport.dart';
+import 'package:akbas_bas_eventfinderapp/education&more.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -49,11 +53,12 @@ class _HomePageState extends State<HomePage> {
                       widget: MembershipPage(),
                       context: context),
 
+                  buildNickNameText(nickNameText),
+
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
 
-                  buildNickNameText(nickNameText),
-                  //
+
                   buildMostPreferredText(),
                   buildMostPreferred(),
                   // //UPCOMING EVENTS COLUMN5-6
@@ -61,13 +66,16 @@ class _HomePageState extends State<HomePage> {
                   buildUpcoming(),
                   //
                   buildCategories(),
-                  // //COLUMN 8 MUSIC ARTS
-                  buildMusicArts(
-                      textMusic: "Music", textArts: "Arts", context: context),
 
-                  //COLUMN 9 SPORTS EDUCATION
-                  buildSportsMore(
-                      textSports: "Sport", textMore: "More", context: context),
+                  buildNavigation(
+                      text: "Music", widget: MusicPage(), image: AssetImage('assets/images/music.jpg'), context: context),
+                  buildNavigation(
+                      text: "Art", widget: ArtPage(), image: AssetImage('assets/images/arts.jpg'), context: context),
+                  buildNavigation(
+                      text: "Sport", widget: SportPage(), image: AssetImage('assets/images/sports.png'), context: context),
+                  buildNavigation(
+                      text: "Education&More", widget: MorePage(), image: AssetImage('assets/images/education&more.jpg'), context: context),
+
                 ],
               )
             ],
@@ -242,140 +250,39 @@ Widget buildCategories() {
       ));
 }
 
-Widget buildMusicArts(
-    {required String textMusic,
-    required String textArts,
-    Widget? widget,
+Widget buildNavigation(
+    {required String text,
+    required Widget widget, required ImageProvider image,
     required BuildContext context}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) {
-          return widget!;
+          return widget;
         }),
       );
     },
     child: Padding(
       padding: EdgeInsets.only(top: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
+      child:
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-            height: 100.0,
-            width: 160.0,
+              height: 90.0,
             padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
               image: DecorationImage(
-                  image: AssetImage("assets/images/music.jpg"),
+                  image: image,
                   fit: BoxFit.cover),
             ),
             child:Center(
             child: Text(
-              textMusic,
+              text,
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
-            ),),
-          ),),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-            height: 100.0,
-            width: 160.0,
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-            decoration: BoxDecoration(
-              color: Color(0xFFE0ECF8),
-              borderRadius: BorderRadius.circular(6),
-              image: DecorationImage(
-                  image: AssetImage("assets/images/arts.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: Text(
-                textArts,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildSportsMore(
-    {required String textSports,
-    required String textMore,
-    Widget? widget,
-    required BuildContext context}) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) {
-            return widget!;
-          },
-        ),
-      );
-    },
-    child: Padding(
-      padding: EdgeInsets.only(top: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-            height: 100.0,
-            width: 160.0,
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-            decoration: BoxDecoration(
-              color: Color(0xFFE0ECF8),
-              borderRadius: BorderRadius.circular(6),
-              image: DecorationImage(
-                  image: AssetImage("assets/images/sports.png"),
-                  fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: Text(
-                textSports,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900),
-              ),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-            height: 100.0,
-            width: 160.0,
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-            decoration: BoxDecoration(
-              color: Color(0xFFE0ECF8),
-              borderRadius: BorderRadius.circular(6),
-              image: DecorationImage(
-                  image: AssetImage("assets/images/education&more.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            child: Center(
-              child: Text(
-                textMore,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w900),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
+            ),)))
+          ));
 }
