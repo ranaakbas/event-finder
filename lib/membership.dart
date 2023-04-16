@@ -126,7 +126,7 @@ class _MembershipPageState extends State<MembershipPage> {
               InkWell(
                   onTap: () {},
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 100),
+                    margin: EdgeInsets.symmetric(horizontal: 90),
                     width: MediaQuery.of(context).size.width,
                     height: 45,
                     padding: EdgeInsets.all(10),
@@ -146,7 +146,7 @@ class _MembershipPageState extends State<MembershipPage> {
                       ),
                     ),
                   )),
-                  SizedBox(height:10),
+                  SizedBox(height:35),
               InkWell(
                 
                   onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -154,13 +154,13 @@ class _MembershipPageState extends State<MembershipPage> {
     }));
     },
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 100),
+                    margin: EdgeInsets.symmetric(horizontal: 105),
                     width: MediaQuery.of(context).size.width,
                     height: 45,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF4F6CC4), Color(0xFF63AA65)],
+                        colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
                       ),
                       borderRadius: BorderRadius.circular(20),
                     ),

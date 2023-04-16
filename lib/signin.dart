@@ -11,9 +11,7 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-
   bool _passwordVisible = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +57,13 @@ class _SignInPageState extends State<SignInPage> {
                       Icons.mail,
                       color: Colors.black,
                     ),
-                  hintText: 'E-Mail',
+                    hintText: 'E-Mail',
                   ),
                   style: TextStyle(
                     color: Color(0xFF0A1034),
                   ),
                 ),
               ),
-               
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -84,21 +81,20 @@ class _SignInPageState extends State<SignInPage> {
                       Icons.key_rounded,
                       color: Colors.black,
                     ),
-                    
                     suffixIcon: GestureDetector(
-        onTap: () {
-          setState(() {
-            _passwordVisible = !_passwordVisible;
-          });
-        },
-        child: Icon(
-          _passwordVisible
-             ? Icons.visibility 
-             : Icons.visibility_off,
-          color: Colors.black,
-        ),
-      ),
-      hintText: 'Password',
+                      onTap: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                      child: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                    ),
+                    hintText: 'Password',
                   ),
                   style: TextStyle(color: Color(0xFF0A1034), letterSpacing: 4),
                 ),
@@ -120,38 +116,35 @@ class _SignInPageState extends State<SignInPage> {
                       Icons.key_rounded,
                       color: Colors.black,
                     ),
-                    
                     suffixIcon: GestureDetector(
-        onTap: () {
-          setState(() {
-            _passwordVisible = !_passwordVisible;
-          });
-        },
-        child: Icon(
-          _passwordVisible
-             ? Icons.visibility 
-             : Icons.visibility_off,
-          color: Colors.black,
-        ),
-      ),
-      hintText: 'Password again',
+                      onTap: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                      child: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                    ),
+                    hintText: 'Password again',
                   ),
                   style: TextStyle(color: Color(0xFF0A1034), letterSpacing: 4),
                 ),
               ),
-            
-
-
+              SizedBox(height: 15),
               InkWell(
                   onTap: () {},
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 100),
+                    margin: EdgeInsets.symmetric(horizontal: 105),
                     width: MediaQuery.of(context).size.width,
                     height: 45,
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF4F6CC4), Color(0xFF63AA65)],
+                        colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
                       ),
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -165,8 +158,6 @@ class _SignInPageState extends State<SignInPage> {
                       ),
                     ),
                   )),
-                 
-                    
             ],
           ),
         ),
@@ -181,8 +172,8 @@ Widget buildBackHome(
     required BuildContext context}) {
   return GestureDetector(
       onTap: () {
-       Navigator.pop(context);
-        },
+        Navigator.pop(context);
+      },
       child: Column(
         children: [
           SizedBox(height: 29),
@@ -194,4 +185,3 @@ Widget buildBackHome(
         ],
       ));
 }
-
