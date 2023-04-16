@@ -1,3 +1,4 @@
+import 'package:akbas_bas_eventfinderapp/Event1.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
@@ -6,12 +7,12 @@ import 'package:flutter/src/widgets/framework.dart';
 
 class MusicPage extends StatelessWidget {
   final List<String> events = [
-    "MusicEvent1",
-    "MusicEvent2",
-    "MusicEvent3",
-    "MusicEvent4",
-    "MusicEvent5",
-    "MusicEvent6",
+    "Duman Concert",
+    "Mor ve Ötesi Concert",
+    "Cem Adrian Concert",
+    "Adele Concert",
+    "Taylor Swift Concert",
+    "Metalica Concert",
   ];
 
   @override
@@ -41,7 +42,7 @@ class MusicPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                     children: events
-                        .map((String title) => buildEvents(title: title))
+                        .map((String title) => buildEvents(title: title, widget: EventPage(), context: context))
                         .toList()),
               ),
             ],
@@ -74,8 +75,14 @@ Widget buildBackHome(
       ));
 }
 
-Widget buildEvents({required String title}) {
-  return Container(
+Widget buildEvents({required String title, required Widget widget, required BuildContext context}) {
+  return GestureDetector(
+      onTap: () {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return widget;
+    }));
+  },
+    child: Container(
     padding: EdgeInsets.all(50),
     margin: EdgeInsets.only(bottom: 16),
     width: double.infinity,
@@ -91,5 +98,5 @@ Widget buildEvents({required String title}) {
       ],
     ),
     child: Text(title),
-  );
+  ),);
 }

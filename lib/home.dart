@@ -48,16 +48,34 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   //BAŞBİLET COLUMN1
-                  buildBasBilet(
-                      iconPerson: Icons.person,
-                      widget: MembershipPage(),
-                      context: context),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24.0, bottom: 3),
+                    child: Row(
+                      children: [
+                        Text(
+                          "BaşBilet",
+                          style: TextStyle(
+                            fontSize: 30,
+                            color: Color(0xFF0A1034),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 130),
+                        buildTopButton(
+                            icon: Icons.search, widget: widget, context: context),
+                        buildTopButton(
+                            icon: Icons.person,
+                            widget: MembershipPage(),
+                            context: context),
+                      ],
+                    ),
+                  ),
+
 
                   buildNickNameText(nickNameText),
 
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
-
 
                   buildMostPreferredText(),
                   buildMostPreferred(),
@@ -68,14 +86,25 @@ class _HomePageState extends State<HomePage> {
                   buildCategories(),
 
                   buildNavigation(
-                      text: "Music", widget: MusicPage(), image: AssetImage('assets/images/music.jpg'), context: context),
+                      text: "Music",
+                      widget: MusicPage(),
+                      image: AssetImage('assets/images/music.jpg'),
+                      context: context),
                   buildNavigation(
-                      text: "Art", widget: ArtPage(), image: AssetImage('assets/images/arts.jpg'), context: context),
+                      text: "Art",
+                      widget: ArtPage(),
+                      image: AssetImage('assets/images/arts.jpg'),
+                      context: context),
                   buildNavigation(
-                      text: "Sport", widget: SportPage(), image: AssetImage('assets/images/sports.png'), context: context),
+                      text: "Sport",
+                      widget: SportPage(),
+                      image: AssetImage('assets/images/sports.png'),
+                      context: context),
                   buildNavigation(
-                      text: "Education&More", widget: EducationMorePage(), image: AssetImage('assets/images/education&more.jpg'), context: context),
-
+                      text: "Education&More",
+                      widget: EducationMorePage(),
+                      image: AssetImage('assets/images/education&more.jpg'),
+                      context: context),
                 ],
               )
             ],
@@ -86,8 +115,8 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildBasBilet(
-    {required IconData iconPerson,
+Widget buildTopButton(
+    {required IconData icon,
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
@@ -97,34 +126,11 @@ Widget buildBasBilet(
       }));
     },
     child: Padding(
-      padding: const EdgeInsets.only(top: 24.0, bottom: 3),
-      child: Row(
-        children: [
-          Text(
-            "BaşBilet",
-            style: TextStyle(
-              fontSize: 30,
-              color: Color(0xFF0A1034),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 155),
-            child: Icon(
-              Icons.search,
-              size: 33,
-              color: Color(0xFF0A1034),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20),
-            child: Icon(
-              iconPerson,
-              size: 33,
-              color: Color(0xFF0A1034),
-            ),
-          )
-        ],
+      padding: EdgeInsets.only(left: 20),
+      child: Icon(
+        icon,
+        size: 33,
+        color: Color(0xFF0A1034),
       ),
     ),
   );
@@ -252,37 +258,35 @@ Widget buildCategories() {
 
 Widget buildNavigation(
     {required String text,
-    required Widget widget, required ImageProvider image,
+    required Widget widget,
+    required ImageProvider image,
     required BuildContext context}) {
   return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) {
-          return widget;
-        }),
-      );
-    },
-    child: Padding(
-      padding: EdgeInsets.only(top: 10),
-      child:
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) {
+            return widget;
+          }),
+        );
+      },
+      child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
               height: 90.0,
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              image: DecorationImage(
-                  image: image,
-                  fit: BoxFit.cover),
-            ),
-            child:Center(
-            child: Text(
-              text,
-              style: TextStyle(
+              padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                image: DecorationImage(image: image, fit: BoxFit.cover),
+              ),
+              child: Center(
+                  child: Text(
+                text,
+                style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
-            ),)))
-          ));
+                ),
+              )))));
 }
