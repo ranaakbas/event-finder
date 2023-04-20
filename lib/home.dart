@@ -19,28 +19,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String nickNameText = "Hello";
-  FirebaseDatabase database = FirebaseDatabase.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    activateListeners();
-  }
-
-  void activateListeners() {
-    database.ref().child("users/1/nickName").onValue.listen((event) {
-      final Object? value = event.snapshot.value;
-
-      setState(() {
-        nickNameText = "Hello $value";
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -77,8 +58,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
 
-
-                  buildNickNameText(nickNameText),
 
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
