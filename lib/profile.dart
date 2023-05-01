@@ -10,14 +10,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'auth.dart';
 import 'package:flutterfire_ui/auth.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _SignInPageState createState() => _SignInPageState();
+  _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _ProfilePageState extends State<ProfilePage> {
   bool _passwordVisible = false;
   final email = TextEditingController();
   final password = TextEditingController();
@@ -37,25 +37,11 @@ class _SignInPageState extends State<SignInPage> {
 // } catch (e) {
 //   print(e);
 // }
-
-  void SaveUserIn(BuildContext context) async {
-    try {
-      final userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email.text,
-        password: password.text,
-      );
-      // Kullanıcı başarılı bir şekilde oturum açtı, anasayfaya yönlendir
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } catch (e) {
-      // Hata oluştu, hata mesajını göster
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Kayıt oluşturma başarısız oldu")),
-      );
-    }
+  void SaveUserIn() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email.text,
+      password: password.text,
+    );
   }
 
   @override
@@ -78,7 +64,7 @@ class _SignInPageState extends State<SignInPage> {
                 margin: EdgeInsets.only(top: 130, bottom: 50),
                 child: Center(
                   child: Text(
-                    "Sign Up",
+                    "PROFİL BURA",
                     style: TextStyle(
                       color: Color(0xFF0A1034),
                       fontSize: 37,
@@ -185,7 +171,7 @@ class _SignInPageState extends State<SignInPage> {
               SizedBox(height: 15),
               InkWell(
                   onTap: () {
-                    SaveUserIn(context);
+                    SaveUserIn();
                   },
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 105),

@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:akbas_bas_eventfinderapp/membership.dart';
+import 'package:akbas_bas_eventfinderapp/profile.dart';
 import 'package:akbas_bas_eventfinderapp/music.dart';
 import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:akbas_bas_eventfinderapp/sport.dart';
 import 'package:akbas_bas_eventfinderapp/education&more.dart';
 import 'package:flutter/foundation.dart';
 import 'package:akbas_bas_eventfinderapp/search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -65,18 +67,57 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         SizedBox(width: 130),
-                        buildTopButton(
-                            icon: Icons.search,
-                            widget: SearchBar(),
-                            context: context),
-                        buildTopButton(
-                            icon: Icons.person,
-                            widget: MembershipPage(),
-                            context: context),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SearchBar()),
+                            );
+                          },
+                          child: Icon(Icons.search),
+                        ),
+                        SizedBox(width: 20),
+                        FirebaseAuth.instance.currentUser == null
+                            ? InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => MembershipPage()),
+                                  );
+                                },
+                                child: Icon(Icons.person),
+                              )
+                            : InkWell(
+                                onTap: () async {
+                                  await FirebaseAuth.instance.signOut();
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ProfilePage()),
+                                  );
+                                },
+                                child: Icon(Icons.person),
+                              ),
+                        SizedBox(width: 20),
+                        Visibility(
+                          visible: FirebaseAuth.instance.currentUser != null,
+                          child: InkWell(
+                            onTap: () async {
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MembershipPage()),
+                              );
+                            },
+                            child: Icon(Icons.logout),
+                          ),
+                        ),
                       ],
                     ),
                   ),
-
 
                   buildNickNameText(nickNameText),
 
@@ -121,9 +162,10 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildTopButton({required IconData icon,
-  required Widget widget,
-  required BuildContext context}) {
+Widget buildTopButton(
+    {required IconData icon,
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -261,10 +303,11 @@ Widget buildCategories() {
       ));
 }
 
-Widget buildNavigation({required String text,
-  required Widget widget,
-  required ImageProvider image,
-  required BuildContext context}) {
+Widget buildNavigation(
+    {required String text,
+    required Widget widget,
+    required ImageProvider image,
+    required BuildContext context}) {
   return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -286,11 +329,11 @@ Widget buildNavigation({required String text,
               ),
               child: Center(
                   child: Text(
-                    text,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  )))));
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              )))));
 }

@@ -1,23 +1,53 @@
 import 'dart:ffi';
 import 'dart:math';
 
+import 'package:akbas_bas_eventfinderapp/auth.dart';
 import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:akbas_bas_eventfinderapp/signin.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MembershipPage extends StatefulWidget {
-   MembershipPage({Key? key}) : super(key: key);
-   @override
+  MembershipPage({Key? key}) : super(key: key);
+  @override
   _MembershipPageState createState() => _MembershipPageState();
 }
 
 class _MembershipPageState extends State<MembershipPage> {
-
   bool _passwordVisible = false;
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  //sign user in method
+  // void signUserIn() async {
+  //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+  //     email: emailController.text,
+  //     password: passwordController.text,
+  //   );
+  // }
+  void signUserIn(BuildContext context) async {
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      // Kullanıcı başarılı bir şekilde oturum açtı, anasayfaya yönlendir
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      // Hata oluştu, hata mesajını göster
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Oturum açma başarısız oldu")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +87,7 @@ class _MembershipPageState extends State<MembershipPage> {
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
                 child: TextFormField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: Icon(
@@ -70,7 +101,6 @@ class _MembershipPageState extends State<MembershipPage> {
                   ),
                 ),
               ),
-              
               Container(
                 decoration: BoxDecoration(
                   color: Colors.black12,
@@ -81,6 +111,7 @@ class _MembershipPageState extends State<MembershipPage> {
                 padding:
                     EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
                 child: TextFormField(
+                  controller: passwordController,
                   obscureText: !_passwordVisible,
                   decoration: InputDecoration(
                     border: InputBorder.none,
@@ -89,42 +120,42 @@ class _MembershipPageState extends State<MembershipPage> {
                       color: Colors.black,
                     ),
                     hintText: 'Password',
-                    
                     suffixIcon: GestureDetector(
-        onTap: () {
-          setState(() {
-            _passwordVisible = !_passwordVisible;
-          });
-        },
-        child: Icon(
-          _passwordVisible
-             ? Icons.visibility 
-             : Icons.visibility_off,
-          color: Colors.black,
-        ),
-      ),
+                      onTap: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                      child: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                   style: TextStyle(color: Color(0xFF0A1034), letterSpacing: 4),
                 ),
               ),
               Container(
-  margin: EdgeInsets.symmetric(vertical: 10),
-  child: InkWell(
-    onTap: () {},
-    child: Text(
-      "Forgot Password?",
-      style: TextStyle(
-        color: Color(0xFF4F6CC4),
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-      textAlign: TextAlign.center,
-    ),
-  ),
-),
-
-              InkWell(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: InkWell(
                   onTap: () {},
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Color(0xFF4F6CC4),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              InkWell(
+                  onTap: () {
+                    signUserIn(context);
+                  },
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 90),
                     width: MediaQuery.of(context).size.width,
@@ -146,13 +177,12 @@ class _MembershipPageState extends State<MembershipPage> {
                       ),
                     ),
                   )),
-                  SizedBox(height:35),
+              SizedBox(height: 35),
               InkWell(
-                
-                  onTap: () { Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return SignInPage();
-    }));
-    },
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SignInPage()));
+                  },
                   child: Container(
                     margin: EdgeInsets.symmetric(horizontal: 105),
                     width: MediaQuery.of(context).size.width,
@@ -174,7 +204,6 @@ class _MembershipPageState extends State<MembershipPage> {
                       ),
                     ),
                   ))
-                    
             ],
           ),
         ),
@@ -204,4 +233,3 @@ Widget buildBackHome(
         ],
       ));
 }
-
