@@ -196,7 +196,7 @@ class _MembershipPageState extends State<MembershipPage> {
                     ),
                     child: Center(
                       child: Text(
-                        "Sign In",
+                        "Sign Up",
                         style: TextStyle(
                             color: Colors.black,
                             fontSize: 18,
