@@ -12,6 +12,8 @@ import 'package:akbas_bas_eventfinderapp/education&more.dart';
 import 'package:flutter/foundation.dart';
 import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,26 +22,35 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+// https://www.eventbriteapi.com/v3/users/me/?token=CC5TUK55PQBZMVKKWPOU
 class _HomePageState extends State<HomePage> {
-  String nickNameText = "Hello";
+ 
   FirebaseDatabase database = FirebaseDatabase.instance;
+  List<dynamic> _events = [];
+
+  Future<void> fetchEvents() async {
+    final response = await http.get(
+      Uri.parse(
+          'https://www.eventbriteapi.com/v3/events/search/?token=CC5TUK55PQBZMVKKWPOU'),
+    );
+
+    if (response.statusCode == 200) {
+      setState(() {
+        _events = json.decode(response.body)['events'];
+      });
+    } else {
+      throw Exception('Failed to load events');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    activateListeners();
+   
+    fetchEvents();
   }
 
-  void activateListeners() {
-    database.ref().child("users/1/nickName").onValue.listen((event) {
-      final Object? value = event.snapshot.value;
-
-      setState(() {
-        nickNameText = "Hello $value";
-      });
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
@@ -75,7 +86,7 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => SearchBar()),
                             );
                           },
-                          child: Icon(Icons.search),
+                          child: Icon(Icons.search, color: Color(0xFF0A1034)),
                         ),
                         SizedBox(width: 20),
                         FirebaseAuth.instance.currentUser == null
@@ -87,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) => MembershipPage()),
                                   );
                                 },
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.person, color: Color(0xFF0A1034)),
                               )
                             : InkWell(
                                 onTap: () async {
@@ -98,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) => ProfilePage()),
                                   );
                                 },
-                                child: Icon(Icons.person),
+                                child: Icon(Icons.person, color: Color(0xFF0A1034)),
                               ),
                         SizedBox(width: 20),
                         Visibility(
@@ -112,14 +123,14 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => MembershipPage()),
                               );
                             },
-                            child: Icon(Icons.logout),
+                            child: Icon(Icons.logout, color: Color(0xFF0A1034)),
                           ),
                         ),
                       ],
                     ),
                   ),
 
-                  buildNickNameText(nickNameText),
+                
 
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
@@ -152,6 +163,7 @@ class _HomePageState extends State<HomePage> {
                       widget: EducationMorePage(),
                       image: AssetImage('assets/images/education&more.jpg'),
                       context: context),
+                //  buildApi(context),
                 ],
               )
             ],
@@ -194,13 +206,28 @@ Widget buildNickNameText(nickNameText) {
   );
 }
 
+Widget buildApi( _events) {
+  return Scaffold(
+    body: ListView.builder(
+      itemCount: _events.length,
+      itemBuilder: (BuildContext context, int index) {
+        final event = _events[index];
+        return ListTile(
+          title: Text(event['name']),
+          subtitle: Text(event['description']),
+        );
+      },
+    ),
+  );
+}
+
 Widget buildMostPreferredText() {
   return Padding(
     padding: EdgeInsets.only(top: 19),
     child: Text(
       "Most Preferred Events",
       style: TextStyle(
-          color: Color(0xFF0A1034), fontSize: 18, fontWeight: FontWeight.bold),
+          color: Color(0xFF0A1034), fontSize: 25, fontWeight: FontWeight.bold),
     ),
   );
 }
@@ -210,7 +237,7 @@ Widget buildMostPreferred() {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 110.0,
+        height: 150.0,
         child: ListView(
           // This next line does the trick..
           scrollDirection: Axis.horizontal,
@@ -249,7 +276,7 @@ Widget buildUpcomingText() {
         "Upcoming Events",
         style: TextStyle(
             color: Color(0xFF0A1034),
-            fontSize: 18,
+            fontSize: 25,
             fontWeight: FontWeight.bold),
       ));
 }
@@ -259,7 +286,7 @@ Widget buildUpcoming() {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 110.0,
+        height: 150.0,
         child: ListView(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
@@ -321,7 +348,7 @@ Widget buildNavigation(
           padding: EdgeInsets.only(top: 10),
           child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              height: 90.0,
+              height: 130.0,
               padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
