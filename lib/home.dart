@@ -50,7 +50,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -74,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: 130),
+                        SizedBox(width: 118),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -83,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => SearchBar()),
                             );
                           },
-                          child: Icon(Icons.search, color: Color(0xFF0A1034)),
+                          child: Icon(Icons.search, color: Color(0xFF0A1034), size: 30,),
                         ),
                         SizedBox(width: 20),
                         FirebaseAuth.instance.currentUser == null
@@ -96,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                                   );
                                 },
                                 child: Icon(Icons.person,
-                                    color: Color(0xFF0A1034)),
+                                    color: Color(0xFF0A1034), size: 30,),
                               )
                             : InkWell(
                                 onTap: () async {
@@ -108,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                   );
                                 },
                                 child: Icon(Icons.person,
-                                    color: Color(0xFF0A1034)),
+                                    color: Color(0xFF0A1034), size: 30),
                               ),
                         SizedBox(width: 20),
                         Visibility(
@@ -122,7 +121,7 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => MembershipPage()),
                               );
                             },
-                            child: Icon(Icons.logout, color: Color(0xFF0A1034)),
+                            child: Icon(Icons.logout, color: Color(0xFF0A1034), size: 30,),
                           ),
                         ),
                       ],

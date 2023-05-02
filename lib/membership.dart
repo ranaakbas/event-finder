@@ -12,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class MembershipPage extends StatefulWidget {
   MembershipPage({Key? key}) : super(key: key);
+
   @override
   _MembershipPageState createState() => _MembershipPageState();
 }
@@ -153,57 +154,59 @@ class _MembershipPageState extends State<MembershipPage> {
                 ),
               ),
               InkWell(
-                  onTap: () {
-                    signUserIn(context);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 90),
-                    width: MediaQuery.of(context).size.width,
-                    height: 45,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFF4F6CC4), Color(0xFF63AA65)],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  signUserIn(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 90),
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFF4F6CC4), Color(0xFF63AA65)],
                     ),
-                    child: Center(
-                      child: Text(
-                        "Log In",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Log In",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
-                  )),
+                  ),
+                ),
+              ),
               SizedBox(height: 35),
               InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => SignInPage()));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 105),
-                    width: MediaQuery.of(context).size.width,
-                    height: 45,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignInPage()));
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 105),
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
                     ),
-                    child: Center(
-                      child: Text(
-                        "Sign Up",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ))
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -217,19 +220,20 @@ Widget buildBackHome(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return widget;
-        }));
-      },
-      child: Column(
-        children: [
-          SizedBox(height: 29),
-          Icon(
-            backHome,
-            color: Colors.black,
-            size: 50,
-          ),
-        ],
-      ));
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return widget;
+      }));
+    },
+    child: Column(
+      children: [
+        SizedBox(height: 29),
+        Icon(
+          backHome,
+          color: Colors.black,
+          size: 50,
+        ),
+      ],
+    ),
+  );
 }

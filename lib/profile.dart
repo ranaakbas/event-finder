@@ -1,4 +1,5 @@
 import 'package:akbas_bas_eventfinderapp/Event1.dart';
+import 'package:akbas_bas_eventfinderapp/music.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -16,26 +17,42 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          ProfilePageBackground(
-            screenHeight: MediaQuery.of(context).size.height,
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  buildBackHome(
-                      backHome: Icons.arrow_back,
-                      widget: HomePage(),
-                      context: context),
-                  SizedBox(height: 24),
-                ],
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            ProfilePageBackground(
+              screenHeight: MediaQuery.of(context).size.height,
+            ),
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      buildBackHome(
+                          backHome: Icons.arrow_back,
+                          widget: HomePage(),
+                          context: context),
+                      SizedBox(height: 480),
+                      buildProfileButton(
+                          text: 'Purchased Tickets',
+                          widget: HomePage(),
+                          context: context),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      buildProfileButton(
+                          text: 'Change Password',
+                          widget: MusicPage(),
+                          context: context),
+                    ],
+                  ),
+                ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -46,49 +63,61 @@ Widget buildBackHome(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return widget;
-        }));
-      },
-      child: Column(
-        children: [
-          SizedBox(height: 29),
-          Icon(
-            backHome,
-            color: Colors.black,
-            size: 50,
-          ),
-        ],
-      ));
-}
-
-Widget buildEvents(
-    {required String title,
-    required Widget widget,
-    required BuildContext context}) {
-  return GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return widget;
       }));
     },
+    child: Column(
+      children: [
+        SizedBox(height: 29),
+        Icon(
+          backHome,
+          color: Colors.white,
+          size: 50,
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildProfileButton(
+    {required String text,
+    required Widget widget,
+    required BuildContext context}) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return widget;
+          },
+        ),
+      );
+    },
     child: Container(
-      padding: EdgeInsets.all(50),
-      margin: EdgeInsets.only(bottom: 16),
-      width: double.infinity,
+      margin: EdgeInsets.symmetric(horizontal: 50),
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Color(0xFFC7D8F6FF),
-        borderRadius: BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          ),
-        ],
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF70B0C5),
+            Color(0xFF7ACE8C),
+            Color(0xFFCBBC66),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(20),
       ),
-      child: Text(title),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+      ),
     ),
   );
 }
