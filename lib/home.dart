@@ -24,7 +24,6 @@ class HomePage extends StatefulWidget {
 
 // https://www.eventbriteapi.com/v3/users/me/?token=CC5TUK55PQBZMVKKWPOU
 class _HomePageState extends State<HomePage> {
- 
   FirebaseDatabase database = FirebaseDatabase.instance;
   List<dynamic> _events = [];
 
@@ -46,11 +45,9 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-   
     fetchEvents();
   }
 
-  
   @override
   Widget build(BuildContext context) {
     DatabaseReference userRef = FirebaseDatabase.instance.ref("users/1");
@@ -98,18 +95,20 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) => MembershipPage()),
                                   );
                                 },
-                                child: Icon(Icons.person, color: Color(0xFF0A1034)),
+                                child: Icon(Icons.person,
+                                    color: Color(0xFF0A1034)),
                               )
                             : InkWell(
                                 onTap: () async {
-                                  await FirebaseAuth.instance.signOut();
+
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ProfilePage()),
                                   );
                                 },
-                                child: Icon(Icons.person, color: Color(0xFF0A1034)),
+                                child: Icon(Icons.person,
+                                    color: Color(0xFF0A1034)),
                               ),
                         SizedBox(width: 20),
                         Visibility(
@@ -129,8 +128,6 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-
-                
 
                   //FILTER COLUMN2
                   //MOST PREFFERED COLUMN3-4
@@ -163,7 +160,7 @@ class _HomePageState extends State<HomePage> {
                       widget: EducationMorePage(),
                       image: AssetImage('assets/images/education&more.jpg'),
                       context: context),
-                //  buildApi(context),
+                  //  buildApi(context),
                 ],
               )
             ],
@@ -206,7 +203,7 @@ Widget buildNickNameText(nickNameText) {
   );
 }
 
-Widget buildApi( _events) {
+Widget buildApi(_events) {
   return Scaffold(
     body: ListView.builder(
       itemCount: _events.length,

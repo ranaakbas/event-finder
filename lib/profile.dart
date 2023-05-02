@@ -1,4 +1,5 @@
 import 'package:akbas_bas_eventfinderapp/Event1.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
@@ -6,7 +7,12 @@ import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:akbas_bas_eventfinderapp/profile_background.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
