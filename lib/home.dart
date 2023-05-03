@@ -22,23 +22,26 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-// https://www.eventbriteapi.com/v3/users/me/?token=CC5TUK55PQBZMVKKWPOU
 class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   List<dynamic> _events = [];
 
   Future<void> fetchEvents() async {
-    final response = await http.get(
-      Uri.parse(
-          'https://www.eventbriteapi.com/v3/events/search/?token=CC5TUK55PQBZMVKKWPOU'),
-    );
-
+    final response = await http
+        .get(Uri.parse("https://my-event-api.herokuapp.com/etkinlikler"));
     if (response.statusCode == 200) {
+      // API'den veri başarıyla alındı
+      final List<dynamic> events = json.decode(response.body);
+      // events listesini kullanarak istediğiniz işlemleri yapabilirsiniz
       setState(() {
-        _events = json.decode(response.body)['events'];
+        _events = events;
       });
+      print(
+        events,
+      );
     } else {
-      throw Exception('Failed to load events');
+      // API'den veri alınırken bir hata oluştu
+      throw Exception('API isteği başarısız oldu: ${response.statusCode}');
     }
   }
 
@@ -82,7 +85,11 @@ class _HomePageState extends State<HomePage> {
                                   builder: (context) => SearchBar()),
                             );
                           },
-                          child: Icon(Icons.search, color: Color(0xFF0A1034), size: 30,),
+                          child: Icon(
+                            Icons.search,
+                            color: Color(0xFF0A1034),
+                            size: 30,
+                          ),
                         ),
                         SizedBox(width: 20),
                         FirebaseAuth.instance.currentUser == null
@@ -94,12 +101,14 @@ class _HomePageState extends State<HomePage> {
                                         builder: (context) => MembershipPage()),
                                   );
                                 },
-                                child: Icon(Icons.person,
-                                    color: Color(0xFF0A1034), size: 30,),
+                                child: Icon(
+                                  Icons.person,
+                                  color: Color(0xFF0A1034),
+                                  size: 30,
+                                ),
                               )
                             : InkWell(
                                 onTap: () async {
-
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -121,7 +130,11 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => MembershipPage()),
                               );
                             },
-                            child: Icon(Icons.logout, color: Color(0xFF0A1034), size: 30,),
+                            child: Icon(
+                              Icons.logout,
+                              color: Color(0xFF0A1034),
+                              size: 30,
+                            ),
                           ),
                         ),
                       ],
@@ -138,15 +151,21 @@ class _HomePageState extends State<HomePage> {
                   buildUpcoming(),
                   //
                   buildCategories(),
-
                   buildNavigation(
-                      text: "Music",
-                      widget: MusicPage(),
-                      image: AssetImage('assets/images/music.jpg'),
-                      context: context),
+                    text: "Music",
+                    widget: MusicPage(
+                        events: _events
+                            .where((event) => event['kategori'] == 'Konser')
+                            .toList()),
+                    image: AssetImage('assets/images/music.jpg'),
+                    context: context,
+                  ),
                   buildNavigation(
                       text: "Art",
-                      widget: ArtPage(),
+                      widget: ArtPage(
+                          events: _events
+                              .where((event) => event['kategori'] == 'Sinema')
+                              .toList()),
                       image: AssetImage('assets/images/arts.jpg'),
                       context: context),
                   buildNavigation(
@@ -156,7 +175,10 @@ class _HomePageState extends State<HomePage> {
                       context: context),
                   buildNavigation(
                       text: "Education&More",
-                      widget: EducationMorePage(),
+                      widget: EducationMorePage(
+                          events: _events
+                              .where((event) => event['kategori'] == 'Spor')
+                              .toList()),
                       image: AssetImage('assets/images/education&more.jpg'),
                       context: context),
                   //  buildApi(context),

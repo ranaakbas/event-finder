@@ -6,6 +6,9 @@ import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class EventPage extends StatelessWidget {
+  final dynamic event;
+
+  EventPage({required this.event});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,11 +21,11 @@ class EventPage extends StatelessWidget {
             children: [
               buildBackHome(
                   backHome: Icons.arrow_back,
-                  widget: MusicPage(),
+                  widget: HomePage(),
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Duman Concert",
+                event["adi"],
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -42,9 +45,11 @@ class EventPage extends StatelessWidget {
                       fit: BoxFit.cover),
                 ),
               ),
-              SizedBox(height: 5,),
+              SizedBox(
+                height: 5,
+              ),
               Text(
-                "Place: Harbiye Açık Hava Sahnesi",
+                "Place: `${event["sehir"]}",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
@@ -52,20 +57,32 @@ class EventPage extends StatelessWidget {
                 ),
               ),
               Text(
-                "Date: 22.10.2023",
+                "City: `${event["sehir"]}",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20,),
-              Text("Information",
+              Text(
+                "Date: `${event["tarih"]}`",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
                   fontWeight: FontWeight.bold,
-                ),),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Information",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Color(0xFF0A1034),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Text(
                 "You have to show your ticket when you're entering the place. You have to older than 18. You couldn't bring any food or drink.",
                 style: TextStyle(
@@ -74,9 +91,11 @@ class EventPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 80,),
+              SizedBox(
+                height: 80,
+              ),
               Text(
-                "Price: 500₺",
+                "Price: `${event["fiyat"]}`",
                 style: TextStyle(
                   fontSize: 20,
                   color: Color(0xFF0A1034),

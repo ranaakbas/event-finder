@@ -6,14 +6,9 @@ import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class MusicPage extends StatelessWidget {
-  final List<String> events = [
-    "Duman Concert",
-    "Mor ve Ötesi Concert",
-    "Cem Adrian Concert",
-    "Adele Concert",
-    "Taylor Swift Concert",
-    "Metalica Concert",
-  ];
+  final List<dynamic> events;
+
+  MusicPage({required this.events});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +37,13 @@ class MusicPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                     children: events
-                        .map((String title) => buildEvents(title: title, widget: EventPage(), context: context))
+                        .map((dynamic item) => buildEvents(
+                            title: item?["adi"] ?? "",
+                            time: item?["saat"] ?? "",
+                            widget: EventPage(
+                              event: item,
+                            ),
+                            context: context))
                         .toList()),
               ),
             ],
@@ -75,28 +76,38 @@ Widget buildBackHome(
       ));
 }
 
-Widget buildEvents({required String title, required Widget widget, required BuildContext context}) {
+Widget buildEvents(
+    {required String title,
+    required String time,
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return widget;
-    }));
-  },
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return widget;
+      }));
+    },
     child: Container(
-    padding: EdgeInsets.all(50),
-    margin: EdgeInsets.only(bottom: 16),
-    width: double.infinity,
-    decoration: BoxDecoration(
-      color: Color(0xFFC7D8F6FF),
-      borderRadius: BorderRadius.circular(6),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.25),
-          blurRadius: 4,
-          offset: Offset(0, 4),
-        ),
-      ],
+      padding: EdgeInsets.all(50),
+      margin: EdgeInsets.only(bottom: 16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Color(0xFFC7D8F6FF),
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Text(title),
+          Text(time),
+        ],
+      ),
     ),
-    child: Text(title),
-  ),);
+  );
 }
