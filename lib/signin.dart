@@ -184,30 +184,35 @@ class _SignInPageState extends State<SignInPage> {
               ),
               SizedBox(height: 15),
               InkWell(
-                  onTap: () {
-                    SaveUserIn(context);
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 105),
-                    width: MediaQuery.of(context).size.width,
-                    height: 45,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
-                      ),
-                      borderRadius: BorderRadius.circular(20),
+                onTap: () {
+                  SaveUserIn(context);
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 105),
+                  width: MediaQuery.of(context).size.width,
+                  height: 45,
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF70B0C5),
+                        Color(0xFF7ACE8C),
+                        Color(0xFFCBBC66)
+                      ],
                     ),
-                    child: Center(
-                      child: Text(
-                        "Save",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      "Save",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold),
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -221,17 +226,18 @@ Widget buildBackHome(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Column(
-        children: [
-          SizedBox(height: 29),
-          Icon(
-            backHome,
-            color: Colors.black,
-            size: 50,
-          ),
-        ],
-      ));
+    onTap: () {
+      Navigator.pop(context);
+    },
+    child: Column(
+      children: [
+        SizedBox(height: 29),
+        Icon(
+          backHome,
+          color: Colors.black,
+          size: 50,
+        ),
+      ],
+    ),
+  );
 }

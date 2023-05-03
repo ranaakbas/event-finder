@@ -140,26 +140,8 @@ class _MembershipPageState extends State<MembershipPage> {
                   style: TextStyle(color: Color(0xFF0A1034), letterSpacing: 4),
                 ),
               ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForgotPasswordPage(context)));
-                  },
-                  child: Text(
-
-                    "Forgot Password?",
-                    style: TextStyle(
-                      color: Color(0xFF4F6CC4),
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+              SizedBox(
+                height: 13,
               ),
               InkWell(
                 onTap: () {
@@ -172,7 +154,11 @@ class _MembershipPageState extends State<MembershipPage> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF4F6CC4), Color(0xFF63AA65)],
+                      colors: [
+                        Color(0xFF70B0C5),
+                        Color(0xFF7ACE8C),
+                        Color(0xFFCBBC66),
+                      ],
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -180,39 +166,49 @@ class _MembershipPageState extends State<MembershipPage> {
                     child: Text(
                       "Log In",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 35),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(context)));
+                  },
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Color(0xFF4F6CC4),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
               InkWell(
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SignInPage()));
                 },
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 105),
-                  width: MediaQuery.of(context).size.width,
-                  height: 45,
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFDE6EAE), Color(0xFFEAB06A)],
-                    ),
-                    borderRadius: BorderRadius.circular(20),
+                child: Text(
+                  "Create Account.",
+                  style: TextStyle(
+                    color: Color(0xFF4F6CC4),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Center(
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ],
