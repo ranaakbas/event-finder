@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:akbas_bas_eventfinderapp/signin.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:akbas_bas_eventfinderapp/forgotpassword.dart';
 
 class MembershipPage extends StatefulWidget {
-  MembershipPage({Key? key}) : super(key: key);
+  MembershipPage({super.key});
 
   @override
   _MembershipPageState createState() => _MembershipPageState();
@@ -141,8 +143,14 @@ class _MembershipPageState extends State<MembershipPage> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(context)));
+                  },
                   child: Text(
+
                     "Forgot Password?",
                     style: TextStyle(
                       color: Color(0xFF4F6CC4),
