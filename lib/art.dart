@@ -67,8 +67,8 @@ class _ArtPageState extends State<ArtPage> {
               DropdownButton<String>(
                 value: _selectedCity,
                 items: <String>[
-                  'All'
-                      'Adana',
+                  'All',
+                  'Adana',
                   'Adıyaman',
                   'Afyonkarahisar',
                   'Ağrı',
