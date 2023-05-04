@@ -331,14 +331,13 @@ Widget buildUpcoming(_events) {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 150.0,
+        height: 300.0,
         child: ListView.builder(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
           itemCount: mostEvents.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
-              width: 160.0,
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               child: Card(
                 child: Column(
@@ -350,10 +349,18 @@ Widget buildUpcoming(_events) {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    Expanded(
-                      child: Center(
-                        child: Text(mostEvents[index]['name']),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Center(
+                      child: Text(
+                        mostEvents[index]['name'],
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700),
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                   ],
                 ),
