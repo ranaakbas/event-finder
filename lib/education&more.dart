@@ -26,7 +26,7 @@ class EducationMorePage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Art Events",
+                "Education&More Events",
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -102,7 +102,24 @@ Widget buildEvents(
       ),
       child: Row(
         children: [
-          Text(title),
+          Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+            ],
+          ),
         ],
       ),
     ),

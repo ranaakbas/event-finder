@@ -26,7 +26,7 @@ class SportPage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Cinema Events",
+                "Sport Events",
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -104,10 +104,31 @@ Widget buildEvents(
       ),
       child: Row(
         children: [
-          Text(title),
-          Text(time),
+
+      Column(
+      children: [
+      SizedBox(height: 15,),
+      Text(
+        title,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 13,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      SizedBox(
+        height: 3,
+      ),
+      Text(
+        time,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
         ],
       ),
-    ),
-  );
+    ],),
+  ),);
 }

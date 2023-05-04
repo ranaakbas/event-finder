@@ -104,8 +104,32 @@ Widget buildEvents(
       ),
       child: Row(
         children: [
-          Text(title),
-          Text(time),
+          Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                time,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     ),
