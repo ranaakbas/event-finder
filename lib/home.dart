@@ -12,6 +12,8 @@ import 'package:akbas_bas_eventfinderapp/education&more.dart';
 import 'package:flutter/foundation.dart';
 import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:akbas_bas_eventfinderapp/cinema.dart';
+import 'package:akbas_bas_eventfinderapp/theatre.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -166,7 +168,17 @@ class _HomePageState extends State<HomePage> {
                           events: _events
                               .where((event) => event['kategori'] == 'Sinema')
                               .toList()),
-                      image: AssetImage('assets/images/arts.jpg'),
+                      image: AssetImage('assets/images/art.jpg'),
+                      context: context),
+                  buildNavigation(
+                      text: "Cinema",
+                      widget: CinemaPage(),
+                      image: AssetImage('assets/images/cinema.jpeg'),
+                      context: context),
+                  buildNavigation(
+                      text: "Theatre",
+                      widget: TheatrePage(),
+                      image: AssetImage('assets/images/theatre.jpg'),
                       context: context),
                   buildNavigation(
                       text: "Sport",
