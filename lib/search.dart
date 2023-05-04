@@ -68,6 +68,7 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 Row(
                   children: [
+                    buildBackHome(backHome: Icons.arrow_back, widget: HomePage(), context: context),
                     Flexible(
                       flex: 1,
                       child: TextField(
@@ -81,7 +82,7 @@ class _SearchBarState extends State<SearchBar> {
                             borderSide: BorderSide.none,
                           ),
                           prefixIcon: Icon(Icons.search, color: Colors.grey),
-                          hintText: "Arama yap",
+                          hintText: "Search",
                           hintStyle: TextStyle(color: Colors.grey),
                         ),
                         onChanged: (searchText) {
@@ -118,4 +119,26 @@ class _SearchBarState extends State<SearchBar> {
       ),
     );
   }
+}
+
+Widget buildBackHome(
+    {required IconData backHome,
+      required Widget widget,
+      required BuildContext context}) {
+  return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return widget;
+        }));
+      },
+      child: Column(
+        children: [
+          SizedBox(height: 29),
+          Icon(
+            backHome,
+            color: Colors.black,
+            size: 40,
+          ),
+        ],
+      ));
 }
