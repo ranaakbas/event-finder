@@ -40,6 +40,8 @@ class MusicPage extends StatelessWidget {
                         .map((dynamic item) => buildEvents(
                             title: item?["name"] ?? "",
                             time: item?["time"] ?? "",
+                            imageUrl: item?["imageUrl"] ??
+                                "", // pass imageUrl parameter
                             widget: EventPage(
                               event: item,
                             ),
@@ -79,6 +81,7 @@ Widget buildBackHome(
 Widget buildEvents(
     {required String title,
     required String time,
+    required String imageUrl, // added imageUrl parameter
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
@@ -104,8 +107,16 @@ Widget buildEvents(
       ),
       child: Row(
         children: [
-          Text(title),
-          Text(time),
+          // add image here
+          // Image.network(imageUrl, width: 50, height: 50),
+          SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title),
+              Text(time),
+            ],
+          ),
         ],
       ),
     ),

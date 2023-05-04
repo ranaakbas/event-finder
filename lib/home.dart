@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   //MOST PREFFERED COLUMN3-4
 
                   buildMostPreferredText(),
-                  buildMostPreferred(),
+                  buildMostPreferred(_events),
                   // //UPCOMING EVENTS COLUMN5-6
                   buildUpcomingText(),
                   buildUpcoming(_events),
@@ -273,37 +273,51 @@ Widget buildMostPreferredText() {
   );
 }
 
-Widget buildMostPreferred() {
+Widget buildUpcoming(_events) {
+  List<dynamic> mostEvents = _events
+      .where((event) => event['category'] == 'Coming')
+      .toList(); // Sadece "Most" kategorisindeki etkinliklerin listesi
+
   return Column(
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 150.0,
-        child: ListView(
-          // This next line does the trick..
+        height: 300.0,
+        child: ListView.builder(
+          // This next line does the trick.
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Container(
-              width: 160.0,
-              color: Colors.red,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.blue,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.green,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.yellow,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.orange,
-            ),
-          ],
+          itemCount: mostEvents.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.network(
+                        mostEvents[index]['imageUrl'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Center(
+                      child: Text(
+                        mostEvents[index]['name'],
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     ],
@@ -322,9 +336,9 @@ Widget buildUpcomingText() {
       ));
 }
 
-Widget buildUpcoming(_events) {
+Widget buildMostPreferred(_events) {
   List<dynamic> mostEvents = _events
-      .where((event) => event['category'] == 'Coming')
+      .where((event) => event['category'] == 'Most')
       .toList(); // Sadece "Most" kategorisindeki etkinliklerin listesi
 
   return Column(
