@@ -228,7 +228,10 @@ Widget buildEvents(
                     image: NetworkImage(imageUrl), fit: BoxFit.cover),
               ),
               child: Center(
-                  child: Row(children: [
+                  child: Column(children: [
+                SizedBox(
+                  height: 15,
+                ),
                 Text(
                   title,
                   style: TextStyle(
@@ -236,6 +239,9 @@ Widget buildEvents(
                     fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
+                ),
+                SizedBox(
+                  height: 3,
                 ),
                 Text(
                   time,

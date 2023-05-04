@@ -230,29 +230,31 @@ Widget buildEvents(
         child: Center(
           child: Row(
             children: [
-              Column(
-                children: [
-                  SizedBox(height: 15,),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
+              Center(
+                child: Column(
+                  children: [
+                    SizedBox(height: 15,),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 3,
-                  ),
-                  Text(
-                    time,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w900,
+                    SizedBox(
+                      height: 3,
                     ),
-                  ),
-                ],
+                    Text(
+                      time,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

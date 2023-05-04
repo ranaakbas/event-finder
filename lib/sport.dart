@@ -227,15 +227,17 @@ Widget buildEvents(
                     image: NetworkImage(imageUrl), fit: BoxFit.cover),
               ),
               child: Center(
-                  child: Row(children: [
+                  child: Column(children: [
+                    SizedBox(height: 15,),
                 Text(
                   title,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.w900,
                   ),
                 ),
+                SizedBox(height: 3,),
                 Text(
                   time,
                   style: TextStyle(
