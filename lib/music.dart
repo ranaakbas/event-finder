@@ -38,8 +38,8 @@ class MusicPage extends StatelessWidget {
                 child: ListView(
                     children: events
                         .map((dynamic item) => buildEvents(
-                            title: item?["adi"] ?? "",
-                            time: item?["saat"] ?? "",
+                            title: item?["name"] ?? "",
+                            time: item?["time"] ?? "",
                             widget: EventPage(
                               event: item,
                             ),

@@ -3,16 +3,12 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
 import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:akbas_bas_eventfinderapp/Event1.dart';
 
 class SportPage extends StatelessWidget {
-  final List<String> events = [
-    "SportEvent1",
-    "SportEvent2",
-    "SportEvent3",
-    "SportEvent4",
-    "SportEvent5",
-    "SportEvent6",
-  ];
+  final List<dynamic> events;
+
+  SportPage({required this.events});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +26,7 @@ class SportPage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Sport Events",
+                "Cinema Events",
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -41,7 +37,13 @@ class SportPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                     children: events
-                        .map((String title) => buildEvents(title: title))
+                        .map((dynamic item) => buildEvents(
+                            title: item?["name"] ?? "",
+                            time: item?["time"] ?? "",
+                            widget: EventPage(
+                              event: item,
+                            ),
+                            context: context))
                         .toList()),
               ),
             ],
@@ -54,8 +56,8 @@ class SportPage extends StatelessWidget {
 
 Widget buildBackHome(
     {required IconData backHome,
-      required Widget widget,
-      required BuildContext context}) {
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -74,22 +76,38 @@ Widget buildBackHome(
       ));
 }
 
-Widget buildEvents({required String title}) {
-  return Container(
-    padding: EdgeInsets.all(50),
-    margin: EdgeInsets.only(bottom: 16),
-    width: double.infinity,
-    decoration: BoxDecoration(
-      color: Color(0xFFC7D8F6FF),
-      borderRadius: BorderRadius.circular(6),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.25),
-          blurRadius: 4,
-          offset: Offset(0, 4),
-        ),
-      ],
+Widget buildEvents(
+    {required String title,
+    required String time,
+    required Widget widget,
+    required BuildContext context}) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return widget;
+      }));
+    },
+    child: Container(
+      padding: EdgeInsets.all(50),
+      margin: EdgeInsets.only(bottom: 16),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Color(0xFFC7D8F6FF),
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Text(title),
+          Text(time),
+        ],
+      ),
     ),
-    child: Text(title),
   );
 }

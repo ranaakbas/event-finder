@@ -150,14 +150,15 @@ class _HomePageState extends State<HomePage> {
                   buildMostPreferred(),
                   // //UPCOMING EVENTS COLUMN5-6
                   buildUpcomingText(),
-                  buildUpcoming(),
+                  buildUpcoming(_events),
                   //
                   buildCategories(),
+
                   buildNavigation(
                     text: "Music",
                     widget: MusicPage(
                         events: _events
-                            .where((event) => event['kategori'] == 'Konser')
+                            .where((event) => event['category'] == 'Music')
                             .toList()),
                     image: AssetImage('assets/images/music.jpg'),
                     context: context,
@@ -166,30 +167,40 @@ class _HomePageState extends State<HomePage> {
                       text: "Art",
                       widget: ArtPage(
                           events: _events
-                              .where((event) => event['kategori'] == 'Sinema')
+                              .where((event) => event['category'] == 'Art')
                               .toList()),
                       image: AssetImage('assets/images/art.jpg'),
                       context: context),
                   buildNavigation(
                       text: "Cinema",
-                      widget: CinemaPage(),
+                      widget: CinemaPage(
+                          events: _events
+                              .where((event) => event['category'] == 'Movie')
+                              .toList()),
                       image: AssetImage('assets/images/cinema.jpeg'),
                       context: context),
                   buildNavigation(
                       text: "Theatre",
-                      widget: TheatrePage(),
+                      widget: TheatrePage(
+                          events: _events
+                              .where((event) => event['category'] == 'Theatre')
+                              .toList()),
                       image: AssetImage('assets/images/theatre.jpg'),
                       context: context),
                   buildNavigation(
                       text: "Sport",
-                      widget: SportPage(),
+                      widget: SportPage(
+                          events: _events
+                              .where((event) => event['category'] == 'Sport')
+                              .toList()),
                       image: AssetImage('assets/images/sports.png'),
                       context: context),
                   buildNavigation(
                       text: "Education&More",
                       widget: EducationMorePage(
                           events: _events
-                              .where((event) => event['kategori'] == 'Spor')
+                              .where(
+                                  (event) => event['category'] == 'Education')
                               .toList()),
                       image: AssetImage('assets/images/education&more.jpg'),
                       context: context),
@@ -311,37 +322,44 @@ Widget buildUpcomingText() {
       ));
 }
 
-Widget buildUpcoming() {
+Widget buildUpcoming(_events) {
+  List<dynamic> mostEvents = _events
+      .where((event) => event['category'] == 'Coming')
+      .toList(); // Sadece "Most" kategorisindeki etkinliklerin listesi
+
   return Column(
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         height: 150.0,
-        child: ListView(
+        child: ListView.builder(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Container(
+          itemCount: mostEvents.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
               width: 160.0,
-              color: Colors.red,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.blue,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.green,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.yellow,
-            ),
-            Container(
-              width: 160.0,
-              color: Colors.orange,
-            ),
-          ],
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              child: Card(
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Image.network(
+                        mostEvents[index]['imageUrl'],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Expanded(
+                      child: Center(
+                        child: Text(mostEvents[index]['name']),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     ],

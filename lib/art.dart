@@ -38,7 +38,7 @@ class ArtPage extends StatelessWidget {
                 child: ListView(
                     children: events
                         .map((dynamic item) => buildEvents(
-                              title: item?["adi"] ?? "",
+                              title: item?["name"] ?? "",
                               context: context,
                               widget: EventPage(
                                 event: item,

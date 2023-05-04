@@ -25,7 +25,7 @@ class EventPage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                event["adi"],
+                event["name"],
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -41,7 +41,7 @@ class EventPage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(6),
                   image: DecorationImage(
-                      image: AssetImage("assets/images/duman.webp"),
+                      image: NetworkImage(event["imageUrl"]),
                       fit: BoxFit.cover),
                 ),
               ),
@@ -49,7 +49,7 @@ class EventPage extends StatelessWidget {
                 height: 5,
               ),
               Text(
-                "Place: `${event["sehir"]}",
+                "Place: `${event["place"]}",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
@@ -57,7 +57,7 @@ class EventPage extends StatelessWidget {
                 ),
               ),
               Text(
-                "City: `${event["sehir"]}",
+                "City: `${event["city"]}",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
@@ -65,7 +65,7 @@ class EventPage extends StatelessWidget {
                 ),
               ),
               Text(
-                "Date: `${event["tarih"]}`",
+                "Date: `${event["date"]}`",
                 style: TextStyle(
                   fontSize: 18,
                   color: Color(0xFF0A1034),
@@ -95,7 +95,7 @@ class EventPage extends StatelessWidget {
                 height: 80,
               ),
               Text(
-                "Price: `${event["fiyat"]}`",
+                "Price: `${event["price"]}`",
                 style: TextStyle(
                   fontSize: 20,
                   color: Color(0xFF0A1034),

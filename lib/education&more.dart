@@ -38,7 +38,7 @@ class EducationMorePage extends StatelessWidget {
                 child: ListView(
                     children: events
                         .map((dynamic item) => buildEvents(
-                            title: item?["adi"] ?? "",
+                            title: item?["name"] ?? "",
                             widget: EventPage(
                               event: item,
                             ),
