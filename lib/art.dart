@@ -15,8 +15,10 @@ class ArtPage extends StatefulWidget {
 }
 
 class _ArtPageState extends State<ArtPage> {
-  String _selectedCity = "İstanbul";
-  List<dynamic> _filteredEvents = [];
+  String _selectedCity = "All";
+  List<dynamic> _allEvents = []; // All events, fetched once and never changed
+  List<dynamic> _filteredEvents =
+      []; // Events to be shown, change on city change
 
   @override
   void initState() {
@@ -25,11 +27,17 @@ class _ArtPageState extends State<ArtPage> {
   }
 
   void _filterEventsByCity() {
-    setState(() {
-      _filteredEvents = widget.events
-          .where((event) => event["city"] == _selectedCity)
-          .toList();
-    });
+    if (_selectedCity == "All") {
+      setState(() {
+        _filteredEvents = widget.events.toList();
+      });
+    } else {
+      setState(() {
+        _filteredEvents = widget.events
+            .where((event) => event["city"] == _selectedCity)
+            .toList();
+      });
+    }
   }
 
   @override
@@ -58,8 +66,90 @@ class _ArtPageState extends State<ArtPage> {
               SizedBox(height: 16),
               DropdownButton<String>(
                 value: _selectedCity,
-                items:
-                    <String>['İstanbul', 'Ankara', 'Konya'].map((String value) {
+                items: <String>[
+                  'All'
+                      'Adana',
+                  'Adıyaman',
+                  'Afyonkarahisar',
+                  'Ağrı',
+                  'Aksaray',
+                  'Amasya',
+                  'Ankara',
+                  'Antalya',
+                  'Ardahan',
+                  'Artvin',
+                  'Aydın',
+                  'Balıkesir',
+                  'Bartın',
+                  'Batman',
+                  'Bayburt',
+                  'Bilecik',
+                  'Bingöl',
+                  'Bitlis',
+                  'Bolu',
+                  'Burdur',
+                  'Bursa',
+                  'Çanakkale',
+                  'Çankırı',
+                  'Çorum',
+                  'Denizli',
+                  'Diyarbakır',
+                  'Düzce',
+                  'Edirne',
+                  'Elazığ',
+                  'Erzincan',
+                  'Erzurum',
+                  'Eskişehir',
+                  'Gaziantep',
+                  'Giresun',
+                  'Gümüşhane',
+                  'Hakkâri',
+                  'Hatay',
+                  'Iğdır',
+                  'Isparta',
+                  'İstanbul',
+                  'İzmir',
+                  'Kahramanmaraş',
+                  'Karabük',
+                  'Karaman',
+                  'Kars',
+                  'Kastamonu',
+                  'Kayseri',
+                  'Kırıkkale',
+                  'Kırklareli',
+                  'Kırşehir',
+                  'Kilis',
+                  'Kocaeli',
+                  'Konya',
+                  'Kütahya',
+                  'Malatya',
+                  'Manisa',
+                  'Mardin',
+                  'Mersin',
+                  'Muğla',
+                  'Muş',
+                  'Nevşehir',
+                  'Niğde',
+                  'Ordu',
+                  'Osmaniye',
+                  'Rize',
+                  'Sakarya',
+                  'Samsun',
+                  'Siirt',
+                  'Sinop',
+                  'Sivas',
+                  'Şanlıurfa',
+                  'Şırnak',
+                  'Tekirdağ',
+                  'Tokat',
+                  'Trabzon',
+                  'Tunceli',
+                  'Uşak',
+                  'Van',
+                  'Yalova',
+                  'Yozgat',
+                  'Zonguldak'
+                ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
