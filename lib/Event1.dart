@@ -1,9 +1,11 @@
 import 'package:akbas_bas_eventfinderapp/music.dart';
+import 'package:akbas_bas_eventfinderapp/payment.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
 import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:akbas_bas_eventfinderapp/ticket.dart';
 
 class EventPage extends StatelessWidget {
   final dynamic event;
@@ -111,7 +113,14 @@ class EventPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentPage(),
+                        ),
+                      );
+                    },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 100),
                       width: MediaQuery.of(context).size.width,

@@ -40,8 +40,8 @@ class MusicPage extends StatelessWidget {
                         .map((dynamic item) => buildEvents(
                             title: item?["name"] ?? "",
                             time: item?["time"] ?? "",
-                            imageUrl: item?["imageUrl"] ??
-                                "", // pass imageUrl parameter
+                            imageUrl: item?["imageUrl"] ?? "",
+                            // pass imageUrl parameter
                             widget: EventPage(
                               event: item,
                             ),
@@ -61,21 +61,22 @@ Widget buildBackHome(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return widget;
-        }));
-      },
-      child: Column(
-        children: [
-          SizedBox(height: 29),
-          Icon(
-            backHome,
-            color: Colors.black,
-            size: 50,
-          ),
-        ],
-      ));
+    onTap: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return widget;
+      }));
+    },
+    child: Column(
+      children: [
+        SizedBox(height: 29),
+        Icon(
+          backHome,
+          color: Colors.black,
+          size: 50,
+        ),
+      ],
+    ),
+  );
 }
 
 Widget buildEvents(
