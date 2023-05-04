@@ -36,10 +36,6 @@ class _ProfilePageState extends State<ProfilePage> {
                           widget: HomePage(),
                           context: context),
                       SizedBox(height: 480),
-                      buildProfileButton(
-                          text: 'Purchased Tickets',
-                          widget: HomePage(),
-                          context: context),
                       SizedBox(
                         height: 30,
                       ),
