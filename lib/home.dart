@@ -14,6 +14,7 @@ import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:akbas_bas_eventfinderapp/cinema.dart';
 import 'package:akbas_bas_eventfinderapp/theatre.dart';
+import 'package:akbas_bas_eventfinderapp/payment.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -282,7 +283,7 @@ Widget buildUpcoming(_events) {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 300.0,
+        height: 250.0,
         child: ListView.builder(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
@@ -345,7 +346,7 @@ Widget buildMostPreferred(_events) {
     children: [
       Container(
         margin: const EdgeInsets.symmetric(vertical: 10.0),
-        height: 300.0,
+        height: 250.0,
         child: ListView.builder(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
