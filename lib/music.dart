@@ -85,40 +85,39 @@ Widget buildEvents(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return widget;
-      }));
-    },
-    child: Container(
-      padding: EdgeInsets.all(50),
-      margin: EdgeInsets.only(bottom: 16),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFFC7D8F6FF),
-        borderRadius: BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          // add image here
-          // Image.network(imageUrl, width: 50, height: 50),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title),
-              Text(time),
-            ],
-          ),
-        ],
-      ),
-    ),
-  );
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return widget;
+        }));
+      },
+      child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+              height: 130.0,
+              padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                image: DecorationImage(
+                    image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              ),
+              child: Center(
+                  child: Row(children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Text(
+                  time,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ])))));
 }
