@@ -1,14 +1,36 @@
+import 'package:akbas_bas_eventfinderapp/Event1.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutterfire_ui/database.dart';
-import 'package:akbas_bas_eventfinderapp/Event1.dart';
 import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class EducationMorePage extends StatelessWidget {
+class EducationMorePage extends StatefulWidget {
   final List<dynamic> events;
 
   EducationMorePage({required this.events});
+
+  @override
+  _EducationMorePageState createState() => _EducationMorePageState();
+}
+
+class _EducationMorePageState extends State<EducationMorePage> {
+  String _selectedCity = "İstanbul";
+  List<dynamic> _filteredEvents = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filterEventsByCity();
+  }
+
+  void _filterEventsByCity() {
+    setState(() {
+      _filteredEvents = widget.events
+          .where((event) => event["city"] == _selectedCity)
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +48,7 @@ class EducationMorePage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Art Events",
+                "Education and More Events",
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
@@ -34,16 +56,35 @@ class EducationMorePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
+              DropdownButton<String>(
+                value: _selectedCity,
+                items:
+                    <String>['İstanbul', 'Ankara', 'Konya'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCity = newValue!;
+                    _filterEventsByCity();
+                  });
+                },
+              ),
               Expanded(
                 child: ListView(
-                    children: events
-                        .map((dynamic item) => buildEvents(
-                            title: item?["name"] ?? "",
-                            widget: EventPage(
-                              event: item,
-                            ),
-                            context: context))
-                        .toList()),
+                  children: _filteredEvents
+                      .map((dynamic item) => buildEvents(
+                          title: item["name"] ?? "",
+                          time: item["time"] ?? "",
+                          imageUrl: item["imageUrl"] ?? "",
+                          widget: EventPage(
+                            event: item,
+                          ),
+                          context: context))
+                      .toList(),
+                ),
               ),
             ],
           ),
@@ -77,34 +118,44 @@ Widget buildBackHome(
 
 Widget buildEvents(
     {required String title,
+    required String time,
+    required String imageUrl, // added imageUrl parameter
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return widget;
-      }));
-    },
-    child: Container(
-      padding: EdgeInsets.all(50),
-      margin: EdgeInsets.only(bottom: 16),
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: Color(0xFFC7D8F6FF),
-        borderRadius: BorderRadius.circular(6),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            blurRadius: 4,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Text(title),
-        ],
-      ),
-    ),
-  );
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return widget;
+        }));
+      },
+      child: Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+              height: 130.0,
+              padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(6),
+                image: DecorationImage(
+                    image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              ),
+              child: Center(
+                  child: Row(children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Text(
+                  time,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ])))));
 }

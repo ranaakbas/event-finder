@@ -5,10 +5,32 @@ import 'package:flutterfire_ui/database.dart';
 import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class MusicPage extends StatelessWidget {
+class MusicPage extends StatefulWidget {
   final List<dynamic> events;
 
   MusicPage({required this.events});
+
+  @override
+  _MusicPageState createState() => _MusicPageState();
+}
+
+class _MusicPageState extends State<MusicPage> {
+  String _selectedCity = "İstanbul";
+  List<dynamic> _filteredEvents = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _filterEventsByCity();
+  }
+
+  void _filterEventsByCity() {
+    setState(() {
+      _filteredEvents = widget.events
+          .where((event) => event["city"] == _selectedCity)
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,19 +56,35 @@ class MusicPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 16),
+              DropdownButton<String>(
+                value: _selectedCity,
+                items:
+                    <String>['İstanbul', 'Ankara', 'Konya'].map((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    _selectedCity = newValue!;
+                    _filterEventsByCity();
+                  });
+                },
+              ),
               Expanded(
                 child: ListView(
-                    children: events
-                        .map((dynamic item) => buildEvents(
-                            title: item?["name"] ?? "",
-                            time: item?["time"] ?? "",
-                            imageUrl: item?["imageUrl"] ?? "",
-                            // pass imageUrl parameter
-                            widget: EventPage(
-                              event: item,
-                            ),
-                            context: context))
-                        .toList()),
+                  children: _filteredEvents
+                      .map((dynamic item) => buildEvents(
+                          title: item["name"] ?? "",
+                          time: item["time"] ?? "",
+                          imageUrl: item["imageUrl"] ?? "",
+                          widget: EventPage(
+                            event: item,
+                          ),
+                          context: context))
+                      .toList(),
+                ),
               ),
             ],
           ),
@@ -61,22 +99,21 @@ Widget buildBackHome(
     required Widget widget,
     required BuildContext context}) {
   return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return widget;
-      }));
-    },
-    child: Column(
-      children: [
-        SizedBox(height: 29),
-        Icon(
-          backHome,
-          color: Colors.black,
-          size: 50,
-        ),
-      ],
-    ),
-  );
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return widget;
+        }));
+      },
+      child: Column(
+        children: [
+          SizedBox(height: 29),
+          Icon(
+            backHome,
+            color: Colors.black,
+            size: 50,
+          ),
+        ],
+      ));
 }
 
 Widget buildEvents(

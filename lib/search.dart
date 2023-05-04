@@ -25,7 +25,7 @@ class _SearchBarState extends State<SearchBar> {
 
   Future<void> fetchEvents(String category) async {
     final response = await http.get(Uri.parse(
-        "https://my-event-api.herokuapp.com/etkinlikler?category=$category"));
+        "https://my-event-api.herokuapp.com/etkinlikler?name=$category"));
 
     if (response.statusCode == 200) {
       // API'den veri başarıyla alındı
