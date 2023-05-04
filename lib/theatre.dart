@@ -26,7 +26,7 @@ class TheatrePage extends StatelessWidget {
                   context: context),
               SizedBox(height: 24),
               Text(
-                "Cinema Events",
+                "Theatre Events",
                 style: TextStyle(
                   fontSize: 25,
                   color: Color(0xFF0A1034),
