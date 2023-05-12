@@ -1,3 +1,4 @@
+import 'package:akbas_bas_eventfinderapp/purchases.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:akbas_bas_eventfinderapp/Event1.dart';
@@ -36,6 +37,10 @@ class _ProfilePageState extends State<ProfilePage> {
                           widget: HomePage(),
                           context: context),
                       SizedBox(height: 480),
+                      buildProfileButton(
+                          text: "Purchases",
+                          widget: PurchasesPage(),
+                          context: context),
                       SizedBox(
                         height: 30,
                       ),
