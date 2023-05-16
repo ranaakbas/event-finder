@@ -54,7 +54,7 @@ class EventPage extends StatelessWidget {
                               children: [
                                 buildBackHome(
                                     backHome: Icons.arrow_back,
-                                    widget: ,
+                                    widget: HomePage(),
                                     context: context,
                                 category: event["category"]),
                                 SizedBox(
