@@ -17,6 +17,7 @@ import 'package:akbas_bas_eventfinderapp/theatre.dart';
 import 'package:akbas_bas_eventfinderapp/payment.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'Event1.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -148,10 +149,10 @@ class _HomePageState extends State<HomePage> {
                   //MOST PREFFERED COLUMN3-4
 
                   buildMostPreferredText(),
-                  buildMostPreferred(_events),
+                  buildMostPreferred(_events, context),
                   // //UPCOMING EVENTS COLUMN5-6
                   buildUpcomingText(),
-                  buildUpcoming(_events),
+                  buildUpcoming(_events, context),
                   //
                   buildCategories(),
 
@@ -274,9 +275,9 @@ Widget buildMostPreferredText() {
   );
 }
 
-Widget buildUpcoming(_events) {
+Widget buildMostPreferred(List<dynamic> _events, BuildContext context) {
   List<dynamic> mostEvents = _events
-      .where((event) => event['category'] == 'Coming')
+      .where((event) => event['category'] == 'Most')
       .toList(); // Sadece "Most" kategorisindeki etkinliklerin listesi
 
   return Column(
@@ -289,32 +290,52 @@ Widget buildUpcoming(_events) {
           scrollDirection: Axis.horizontal,
           itemCount: mostEvents.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Image.network(
-                        mostEvents[index]['imageUrl'],
-                        fit: BoxFit.cover,
+            final event = mostEvents[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventPage(event: event),
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: Image.network(
+                          mostEvents[index]['imageUrl'],
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: Text(
-                        mostEvents[index]['name'],
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                  ],
+                      Center(
+                        child: Text(
+                          mostEvents[index]['name'],
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF70B0C5),
+                      Color(0xFF7ACE8C),
+                      Color(0xFFCBBC66),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -337,9 +358,9 @@ Widget buildUpcomingText() {
       ));
 }
 
-Widget buildMostPreferred(_events) {
-  List<dynamic> mostEvents = _events
-      .where((event) => event['category'] == 'Most')
+Widget buildUpcoming(List<dynamic> _events, BuildContext context) {
+  List<dynamic> comingEvents = _events
+      .where((event) => event['category'] == 'Coming')
       .toList(); // Sadece "Most" kategorisindeki etkinliklerin listesi
 
   return Column(
@@ -350,34 +371,54 @@ Widget buildMostPreferred(_events) {
         child: ListView.builder(
           // This next line does the trick.
           scrollDirection: Axis.horizontal,
-          itemCount: mostEvents.length,
+          itemCount: comingEvents.length,
           itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              child: Card(
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      flex: 2,
-                      child: Image.network(
-                        mostEvents[index]['imageUrl'],
-                        fit: BoxFit.cover,
+            final event = comingEvents[index];
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EventPage(event: event),
+                  ),
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                child: Card(
+                  child: Column(
+                    children: <Widget>[
+                      Expanded(
+                        flex: 2,
+                        child: Image.network(
+                          comingEvents[index]['imageUrl'],
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Center(
-                      child: Text(
-                        mostEvents[index]['name'],
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
+                      SizedBox(
+                        height: 5,
                       ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                  ],
+                      Center(
+                        child: Text(
+                          comingEvents[index]['name'],
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color(0xFF70B0C5),
+                      Color(0xFF7ACE8C),
+                      Color(0xFFCBBC66),
+                    ],
+                  ),
                 ),
               ),
             );
@@ -390,14 +431,14 @@ Widget buildMostPreferred(_events) {
 
 Widget buildCategories() {
   return Padding(
-      padding: EdgeInsets.only(top: 15, bottom: 10),
-      child: Text(
-        "Categories",
-        style: TextStyle(
-            color: Color(0xFF0A1034),
-            fontSize: 25,
-            fontWeight: FontWeight.bold),
-      ));
+    padding: EdgeInsets.only(top: 15, bottom: 10),
+    child: Text(
+      "Categories",
+      style: TextStyle(
+          color: Color(0xFF0A1034),
+          fontSize: 25,
+          fontWeight: FontWeight.bold),
+    ),);
 }
 
 Widget buildNavigation(
@@ -432,5 +473,5 @@ Widget buildNavigation(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
-              )))));
+              ),),),),);
 }
