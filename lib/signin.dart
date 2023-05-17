@@ -19,6 +19,7 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool _passwordVisible = false;
+  bool _passwordVisibleAgain = false;
   final email = TextEditingController();
   final password = TextEditingController();
   final passwordAgain = TextEditingController();
@@ -133,11 +134,11 @@ class _SignInPageState extends State<SignInPage> {
                             color: Colors.black,
                           ),
                           suffixIcon: GestureDetector(
-                            // onTap: () {
-                            //   setState(() {
-                            //     _passwordVisible = !_passwordVisible;
-                            //   });
-                            // },
+                            onTap: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                             child: Icon(
                               _passwordVisible
                                   ? Icons.visibility
@@ -161,7 +162,7 @@ class _SignInPageState extends State<SignInPage> {
                           left: 15, right: 15, top: 3, bottom: 3),
                       child: TextFormField(
                         controller: passwordAgain,
-                        obscureText: !_passwordVisible,
+                        obscureText: !_passwordVisibleAgain,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           prefixIcon: Icon(
@@ -169,13 +170,13 @@ class _SignInPageState extends State<SignInPage> {
                             color: Colors.black,
                           ),
                           suffixIcon: GestureDetector(
-                            // onTap: () {
-                            //   setState(() {
-                            //     _passwordVisible = !_passwordVisible;
-                            //   });
-                            // },
+                            onTap: () {
+                              setState(() {
+                                _passwordVisibleAgain = !_passwordVisibleAgain;
+                              });
+                            },
                             child: Icon(
-                              _passwordVisible
+                              _passwordVisibleAgain
                                   ? Icons.visibility
                                   : Icons.visibility_off,
                               color: Colors.black,
