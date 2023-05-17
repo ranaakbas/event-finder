@@ -220,26 +220,26 @@ Widget buildEvents(
       padding: EdgeInsets.only(top: 10),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-        height: 130.0,
+        height: 150.0,
         padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           image:
               DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
         ),
-        child: Center(
-          child: Row(
-            children: [
+        child:
               Center(
                 child: Column(
                   children: [
                     SizedBox(height: 15,),
-                    Text(
-                      title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
+                    Center(
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w900,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -256,10 +256,7 @@ Widget buildEvents(
                   ],
                 ),
               ),
-            ],
           ),
         ),
-      ),
-    ),
   );
 }

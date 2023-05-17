@@ -220,7 +220,7 @@ Widget buildEvents(
           padding: EdgeInsets.only(top: 10),
           child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              height: 130.0,
+              height: 150.0,
               padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
