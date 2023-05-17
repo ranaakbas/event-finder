@@ -25,8 +25,15 @@ import 'dart:convert';
 import 'package:email_otp/email_otp.dart';
 import 'package:akbas_bas_eventfinderapp/verifycode.dart';
 
-class PaymentPage extends StatelessWidget {
+class PaymentPage extends StatefulWidget {
+  @override
+  _PaymentPageState createState() => _PaymentPageState();
+}
+
+class _PaymentPageState extends State<PaymentPage> {
   TextEditingController cardNumberController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool hasError = false; // Track the error status
   EmailOTP myauth = EmailOTP();
 
   @override
@@ -37,180 +44,267 @@ class PaymentPage extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  buildBackHome(
-                      backHome: Icons.arrow_back,
-                      widget: HomePage(),
-                      context: context),
-                  SizedBox(
-                    height: 150,
-                  ),
-                  Text(
-                    "Payment",
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Color(0xFF0A1034),
-                      fontWeight: FontWeight.bold,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildBackHome(
+                        backHome: Icons.arrow_back,
+                        widget: HomePage(),
+                        context: context),
+                    SizedBox(
+                      height: 150,
                     ),
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(20),
+                    Text(
+                      "Payment",
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                    child: TextFormField(
-                      decoration: InputDecoration(
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TextFormField(
+                        decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Full Name",
-                          prefixIcon: Icon(Icons.person_outline_sharp)),
-                      style: TextStyle(
-                        color: Color(0xFF0A1034),
+                          prefixIcon: Icon(Icons.person_outline_sharp),
+                          suffixIcon: hasError
+                              ? Icon(
+                                  Icons.priority_high_rounded,
+                                  color: Colors.red,
+                                )
+                              : null,
+                        ),
+                        style: TextStyle(
+                          color: Color(0xFF0A1034),
+                        ),
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            setState(() {
+                              hasError = true; // Set error status
+                            });
+                            return null;
+                          }
+                          setState(() {
+                            hasError = false; // Reset error status
+                          });
+                          return null;
+                        },
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(20),
+                    SizedBox(
+                      height: 20,
                     ),
-                    child: TextFormField(
-                      controller: cardNumberController,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly,
-                        LengthLimitingTextInputFormatter(16),
-                        CardNumberInputFormatter(),
-                      ],
-                      decoration: InputDecoration(
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value?.isEmpty ?? true) {
+                            setState(() {
+                              hasError = true; // Set error status
+                            });
+                            return null;
+                          }
+                          setState(() {
+                            hasError = false; // Reset error status
+                          });
+                          return null;
+                        },
+                        controller: cardNumberController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(16),
+                          CardNumberInputFormatter(),
+                        ],
+                        decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Card Number",
-                          prefixIcon: Icon(Icons.credit_card)),
-                      style: TextStyle(
-                        color: Color(0xFF0A1034),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(3),
-                              CardNumberInputFormatter(),
-                            ],
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "CVV",
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Icon(Icons.calendar_view_day),
-                              ),
-                            ),
-                          ),
+                          prefixIcon: Icon(Icons.credit_card),
+                          suffixIcon: hasError
+                              ? Icon(
+                                  Icons.priority_high_rounded,
+                                  color: Colors.red,
+                                )
+                              : null,
                         ),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.black12,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                              LengthLimitingTextInputFormatter(4),
-                              CardNumberInputFormatter(),
-                              CardMonthInputFormatter(),
-                            ],
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                              hintText: "MM/YY",
-                              prefixIcon: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 10),
-                                child: Icon(Icons.calendar_today),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 25,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        myauth.setConfig(
-                            appEmail: "contact@hdevcoder.com",
-                            appName: "Email OTP",
-                            userEmail: '${FirebaseAuth.instance.currentUser?.email}',
-                            otpLength: 4,
-                            otpType: OTPType.digitsOnly);
-                        if (await myauth.sendOTP() == true) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Code sent to your mail."),
-                            ),
-                          );
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => OtpScreen(
-                                myauth: myauth,
-                              ),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("Sign in to buy tickets."),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        padding: EdgeInsets.all(10),
-                        backgroundColor: Color(0xFF70B0C5),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 60),
-                        child: Text(
-                          "Pay",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Color(0xFF0A1034),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(3),
+                                CardNumberInputFormatter(),
+                              ],
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "CVV",
+                                prefixIcon: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Icon(Icons.calendar_view_day),
+                                ),
+                                suffixIcon: hasError
+                                    ? Icon(
+                                        Icons.priority_high_rounded,
+                                        color: Colors.red,
+                                      )
+                                    : null,
+                              ),
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  setState(() {
+                                    hasError = true; // Set error status
+                                  });
+                                  return null;
+                                }
+                                setState(() {
+                                  hasError = false; // Reset error status
+                                });
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.black12,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(4),
+                                CardNumberInputFormatter(),
+                                CardMonthInputFormatter(),
+                              ],
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: "MM/YY",
+                                prefixIcon: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  child: Icon(Icons.calendar_today),
+                                ),
+                                suffixIcon: hasError
+                                    ? Icon(
+                                        Icons.priority_high_rounded,
+                                        color: Colors.red,
+                                      )
+                                    : null,
+                              ),
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  setState(() {
+                                    hasError = true; // Set error status
+                                  });
+                                  return null;
+                                }
+                                setState(() {
+                                  hasError = false; // Reset error status
+                                });
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            myauth.setConfig(
+                              appEmail: "contact@hdevcoder.com",
+                              userEmail:
+                                  FirebaseAuth.instance.currentUser?.email,
+                              otpLength: 4,
+                              otpType: OTPType.digitsOnly,
+                            );
+                            bool otpSent = await myauth.sendOTP();
+                            if (otpSent && hasError==false) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Code sent to your mail."),
+                                ),
+                              );
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OtpScreen(
+                                    myauth: myauth,
+                                  ),
+                                ),
+                              );
+                            } else if (hasError == true) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Please fill in all fields."),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Sign in to buy tickets."),
+                                ),
+                              );
+                            }
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          padding: EdgeInsets.all(10),
+                          backgroundColor: Color(0xFF70B0C5),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 60),
+                          child: Text(
+                            "Pay",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
