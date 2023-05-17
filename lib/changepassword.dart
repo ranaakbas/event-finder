@@ -16,85 +16,93 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController forgetPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
           child: Container(
-            child: Column(
-              children: [
-                buildBackHome(
-                    backHome: Icons.arrow_back,
-                    widget: ProfilePage(),
-                    context: context),
-                Container(
-                  alignment: Alignment.center,
-                  height: 250.0,
-                ),
-                SizedBox(
-                  height: 35.0,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black12,
-                    borderRadius: BorderRadius.circular(20),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildBackHome(
+                      backHome: Icons.arrow_back,
+                      widget: ProfilePage(),
+                      context: context),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 250.0,
                   ),
-                  margin: EdgeInsets.only(left: 30, right: 30, bottom: 10),
-                  padding:
-                      EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-                  child: TextFormField(
-                    controller: forgetPasswordController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.password),
-                      hintText: 'New Password',
-                    ),
+                  SizedBox(
+                    height: 35.0,
                   ),
-                ),
-                SizedBox(
-                  height: 30.0,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    var password = forgetPasswordController.text.trim();
-                    final user = FirebaseAuth.instance.currentUser;
-                    if (user != null) {
-                      try {
-                        await user.updatePassword(password);
-                        print("Password Updated!");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Şifre güncellendi")),
-                        );
-                        // Navigator.pushReplacement(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => MembershipPage()),
-                        // );
-                      } on FirebaseAuthException catch (e) {
-                        print("Error $e");
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                              content: Text("Şifre güncelleme başarısız oldu")),
-                        );
-                      }
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    padding: EdgeInsets.all(10),
-                    backgroundColor: Color(0xFF70B0C5),
+                    margin: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                    padding:
+                        EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
+                    child: TextFormField(
+                      controller: forgetPasswordController,
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Icon(Icons.password),
+                        hintText: 'New Password',
+                      ),
+                    ),
                   ),
-                  child: Text(
-                    "Change Password",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold),
+                  SizedBox(
+                    height: 30.0,
                   ),
-                ),
-              ],
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        var password = forgetPasswordController.text.trim();
+                        final user = FirebaseAuth.instance.currentUser;
+                        if (user != null) {
+                          try {
+                            await user.updatePassword(password);
+                            print("Password Updated!");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Şifre güncellendi")),
+                            );
+                            // Navigator.pushReplacement(
+                            //   context,
+                            //   MaterialPageRoute(builder: (context) => MembershipPage()),
+                            // );
+                          } on FirebaseAuthException catch (e) {
+                            print("Error $e");
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content:
+                                      Text("Şifre güncelleme başarısız oldu")),
+                            );
+                          }
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: EdgeInsets.all(10),
+                        backgroundColor: Color(0xFF70B0C5),
+                      ),
+                      child: Text(
+                        "Change Password",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
