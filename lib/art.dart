@@ -167,7 +167,8 @@ class _ArtPageState extends State<ArtPage> {
                   children: _filteredEvents
                       .map((dynamic item) => buildEvents(
                           title: item["name"] ?? "",
-                          time: item["time"] ?? "",
+                          place: item["city"] ?? "",
+                          time: item["date"] ?? "",
                           imageUrl: item["imageUrl"] ?? "",
                           widget: EventPage(
                             event: item,
@@ -209,6 +210,7 @@ Widget buildBackHome(
 Widget buildEvents(
     {required String title,
     required String time,
+    required String place,
     required String imageUrl, // added imageUrl parameter
     required Widget widget,
     required BuildContext context}) {
@@ -242,6 +244,17 @@ Widget buildEvents(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      place,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                 SizedBox(
                   height: 3,
                 ),

@@ -165,7 +165,8 @@ class _MusicPageState extends State<MusicPage> {
                   children: _filteredEvents
                       .map((dynamic item) => buildEvents(
                           title: item["name"] ?? "",
-                          time: item["time"] ?? "",
+                          place: item["city"] ?? "",
+                          time: item["date"] ?? "",
                           imageUrl: item["imageUrl"] ?? "",
                           widget: EventPage(
                             event: item,
@@ -207,6 +208,7 @@ Widget buildBackHome(
 Widget buildEvents(
     {required String title,
     required String time,
+    required String place,
     required String imageUrl, // added imageUrl parameter
     required Widget widget,
     required BuildContext context}) {
@@ -227,36 +229,51 @@ Widget buildEvents(
           image:
               DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
         ),
-        child:
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 15,
+              ),
               Center(
-                child: Column(
-                  children: [
-                    SizedBox(height: 15,),
-                    Center(
-                      child: Text(
-                        title,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      time,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ],
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                place,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                time,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
         ),
+      ),
+    ),
   );
 }
