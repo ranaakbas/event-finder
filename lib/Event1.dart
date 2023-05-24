@@ -126,6 +126,17 @@ class _EventPageState extends State<EventPage> {
                                     ),
                                   ),
                                   SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Time: ${event["time"]}",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xFF0A1034),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
                                     height: 20,
                                   ),
                                   Text(
