@@ -24,7 +24,7 @@ class _EducationMorePageState extends State<EducationMorePage> {
     _filterEventsByCity();
   }
 
-void _filterEventsByCity() {
+  void _filterEventsByCity() {
     if (_selectedCity == "All") {
       setState(() {
         _filteredEvents = widget.events.toList();
@@ -64,9 +64,9 @@ void _filterEventsByCity() {
               SizedBox(height: 16),
               DropdownButton<String>(
                 value: _selectedCity,
-                items:
-                    <String>[ 'All',
-                      'Adana',
+                items: <String>[
+                  'All',
+                  'Adana',
                   'Adıyaman',
                   'Afyonkarahisar',
                   'Ağrı',
@@ -146,7 +146,8 @@ void _filterEventsByCity() {
                   'Van',
                   'Yalova',
                   'Yozgat',
-                  'Zonguldak'].map((String value) {
+                  'Zonguldak'
+                ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -164,7 +165,8 @@ void _filterEventsByCity() {
                   children: _filteredEvents
                       .map((dynamic item) => buildEvents(
                           title: item["name"] ?? "",
-                          time: item["time"] ?? "",
+                          place: item["city"] ?? "",
+                          time: item["date"] ?? "",
                           imageUrl: item["imageUrl"] ?? "",
                           widget: EventPage(
                             event: item,
@@ -206,6 +208,7 @@ Widget buildBackHome(
 Widget buildEvents(
     {required String title,
     required String time,
+    required String place,
     required String imageUrl, // added imageUrl parameter
     required Widget widget,
     required BuildContext context}) {
@@ -219,7 +222,7 @@ Widget buildEvents(
           padding: EdgeInsets.only(top: 10),
           child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              height: 150.0,
+              height: 155.0,
               padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
@@ -228,7 +231,9 @@ Widget buildEvents(
               ),
               child: Center(
                   child: Column(children: [
-                    SizedBox(height: 15,),
+                SizedBox(
+                  height: 15,
+                ),
                 Text(
                   title,
                   style: TextStyle(
@@ -237,7 +242,23 @@ Widget buildEvents(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                SizedBox(height: 3,),
+                SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  place,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                SizedBox(
+                  height: 3,
+                ),
+                SizedBox(
+                  height: 3,
+                ),
                 Text(
                   time,
                   style: TextStyle(
