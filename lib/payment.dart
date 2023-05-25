@@ -26,6 +26,12 @@ import 'package:email_otp/email_otp.dart';
 import 'package:akbas_bas_eventfinderapp/verifycode.dart';
 
 class PaymentPage extends StatefulWidget {
+  PaymentPage({required this.ticketCount, this.price, this.discount});
+
+  final ticketCount;
+  final price;
+  final discount;
+
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
@@ -37,6 +43,11 @@ class _PaymentPageState extends State<PaymentPage> {
   EmailOTP myauth = EmailOTP();
 
   @override
+  get totalPayment => widget.ticketCount * widget.price;
+
+  get discountPayment => widget.ticketCount * widget.discount;
+  final userEmail = FirebaseAuth.instance.currentUser?.email;
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -54,7 +65,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         widget: HomePage(),
                         context: context),
                     SizedBox(
-                      height: 150,
+                      height: 125,
                     ),
                     Text(
                       "Payment",
@@ -64,6 +75,25 @@ class _PaymentPageState extends State<PaymentPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    userEmail != null &&
+                            userEmail!.contains("@") &&
+                            userEmail!
+                                .split("@")[1]
+                                .toLowerCase()
+                                .contains("edu.tr")
+                        ? Text(
+                            '$discountPayment ₺',
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          )
+                        : Text(
+                            '$totalPayment ₺',
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
                     SizedBox(
                       height: 25,
                     ),
@@ -255,7 +285,7 @@ class _PaymentPageState extends State<PaymentPage> {
                               otpType: OTPType.digitsOnly,
                             );
                             bool otpSent = await myauth.sendOTP();
-                            if (otpSent && hasError==false) {
+                            if (otpSent && hasError == false) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                   content: Text("Code sent to your mail."),

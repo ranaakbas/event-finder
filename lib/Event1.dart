@@ -301,7 +301,11 @@ class _EventPageState extends State<EventPage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => PaymentPage(),
+                                            builder: (context) => PaymentPage(
+                                              ticketCount: ticketCount,
+                                              price: originalPrice,
+                                              discount: discountedPrice,
+                                            ),
                                           ),
                                         );
                                       },
