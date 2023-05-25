@@ -104,8 +104,8 @@ class _SearchBarState extends State<SearchBar> {
                   itemBuilder: (context, index) {
                     final event = _events![index];
                     return ListTile(
-                      title: Text("${event['name']}, ${event['city']}"),
-                      subtitle: Text(event['date']),
+                      title: Text("${event['name']}"),
+                      subtitle: Text("${event['date']}, ${event['city']}"),
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
