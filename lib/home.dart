@@ -17,6 +17,7 @@ import 'package:akbas_bas_eventfinderapp/theatre.dart';
 import 'package:akbas_bas_eventfinderapp/payment.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:table_calendar/table_calendar.dart';
 import 'Event1.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,6 +26,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+
 
 class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
@@ -435,10 +438,9 @@ Widget buildCategories() {
     child: Text(
       "Categories",
       style: TextStyle(
-          color: Color(0xFF0A1034),
-          fontSize: 25,
-          fontWeight: FontWeight.bold),
-    ),);
+          color: Color(0xFF0A1034), fontSize: 25, fontWeight: FontWeight.bold),
+    ),
+  );
 }
 
 Widget buildNavigation(
@@ -447,31 +449,35 @@ Widget buildNavigation(
     required ImageProvider image,
     required BuildContext context}) {
   return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) {
-            return widget;
-          }),
-        );
-      },
-      child: Padding(
-          padding: EdgeInsets.only(top: 10),
-          child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              height: 130.0,
-              padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6),
-                image: DecorationImage(image: image, fit: BoxFit.cover),
-              ),
-              child: Center(
-                  child: Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w900,
-                ),
-              ),),),),);
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return widget;
+        }),
+      );
+    },
+    child: Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+        height: 130.0,
+        padding: EdgeInsets.symmetric(horizontal: 19, vertical: 22),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6),
+          image: DecorationImage(image: image, fit: BoxFit.cover),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }

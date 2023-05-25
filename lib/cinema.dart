@@ -44,21 +44,63 @@ class _CinemaPageState extends State<CinemaPage> {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildBackHome(
-                  backHome: Icons.arrow_back,
-                  widget: HomePage(),
-                  context: context),
-              SizedBox(height: 24),
-              Text(
-                "Movie Events",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 29, left: 16, right: 16, bottom: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color(0xFF70B0C5),
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF70B0C5),
+                            Color(0xFF7ACE8C),
+                            Color(0xFFCBBC66),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    Text(
+                      "Movie Events",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(90, 89, 92, 0.91),
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                    SizedBox(width: 36),
+                  ],
                 ),
               ),
               SizedBox(height: 16),
@@ -99,58 +141,19 @@ class _CinemaPageState extends State<CinemaPage> {
                   'Erzurum',
                   'Eskişehir',
                   'Gaziantep',
-                  'Giresun',
-                  'Gümüşhane',
-                  'Hakkâri',
-                  'Hatay',
-                  'Iğdır',
-                  'Isparta',
-                  'İstanbul',
-                  'İzmir',
-                  'Kahramanmaraş',
-                  'Karabük',
-                  'Karaman',
-                  'Kars',
-                  'Kastamonu',
-                  'Kayseri',
-                  'Kırıkkale',
-                  'Kırklareli',
-                  'Kırşehir',
-                  'Kilis',
-                  'Kocaeli',
-                  'Konya',
-                  'Kütahya',
-                  'Malatya',
-                  'Manisa',
-                  'Mardin',
-                  'Mersin',
-                  'Muğla',
-                  'Muş',
-                  'Nevşehir',
-                  'Niğde',
-                  'Ordu',
-                  'Osmaniye',
-                  'Rize',
-                  'Sakarya',
-                  'Samsun',
-                  'Siirt',
-                  'Sinop',
-                  'Sivas',
-                  'Şanlıurfa',
-                  'Şırnak',
-                  'Tekirdağ',
-                  'Tokat',
-                  'Trabzon',
-                  'Tunceli',
-                  'Uşak',
-                  'Van',
-                  'Yalova',
-                  'Yozgat',
-                  'Zonguldak'
                 ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value),
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        value,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
                   );
                 }).toList(),
                 onChanged: (String? newValue) {
@@ -159,6 +162,15 @@ class _CinemaPageState extends State<CinemaPage> {
                     _filterEventsByCity();
                   });
                 },
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+                underline: Container(
+                  height: 2,
+                  color: Colors.blue,
+                ),
+                dropdownColor: Colors.white,
               ),
               Expanded(
                 child: ListView(

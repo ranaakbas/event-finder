@@ -15,8 +15,11 @@ class MusicPage extends StatefulWidget {
 }
 
 class _MusicPageState extends State<MusicPage> {
-  String _selectedCity = "All";
+  String _selectedCity = 'All';
   List<dynamic> _filteredEvents = [];
+
+  double? _minPrice;
+  double? _maxPrice;
 
   @override
   void initState() {
@@ -25,14 +28,44 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   void _filterEventsByCity() {
-    if (_selectedCity == "All") {
+    if (_selectedCity == 'All') {
       setState(() {
         _filteredEvents = widget.events.toList();
       });
     } else {
       setState(() {
         _filteredEvents = widget.events
-            .where((event) => event["city"] == _selectedCity)
+            .where((event) => event['city'] == _selectedCity)
+            .toList();
+      });
+    }
+  }
+
+  double? _getNumericPrice(String price) {
+    final numericPrice = price.replaceAll(RegExp('[^0-9.]'), '');
+    return double.tryParse(numericPrice);
+  }
+
+  void _filterEventsByCityAndPrice() {
+    if (_selectedCity == 'All') {
+      setState(() {
+        _filteredEvents = widget.events
+            .where((event) =>
+                (_minPrice == null ||
+                    _getNumericPrice(event['price'])! >= _minPrice!) &&
+                (_maxPrice == null ||
+                    _getNumericPrice(event['price'])! <= _maxPrice!))
+            .toList();
+      });
+    } else {
+      setState(() {
+        _filteredEvents = widget.events
+            .where((event) =>
+                event['city'] == _selectedCity &&
+                (_minPrice == null ||
+                    _getNumericPrice(event['price'])! >= _minPrice!) &&
+                (_maxPrice == null ||
+                    _getNumericPrice(event['price'])! <= _maxPrice!))
             .toList();
       });
     }
@@ -48,132 +81,210 @@ class _MusicPageState extends State<MusicPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildBackHome(
-                  backHome: Icons.arrow_back,
-                  widget: HomePage(),
-                  context: context),
-              SizedBox(height: 24),
-              Text(
-                "Music Events",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 29, left: 16, right: 16, bottom: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color.fromARGB(255, 211, 238, 244),
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF70B0C5),
+                            Color(0xFF7ACE8C),
+                            Color(0xFFCBBC66),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    Text(
+                      "Music Events",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(90, 89, 92, 0.91),
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                    SizedBox(width: 36),
+                  ],
                 ),
               ),
               SizedBox(height: 16),
-              DropdownButton<String>(
-                value: _selectedCity,
-                items: <String>[
-                  'All',
-                  'Adana',
-                  'Adıyaman',
-                  'Afyonkarahisar',
-                  'Ağrı',
-                  'Aksaray',
-                  'Amasya',
-                  'Ankara',
-                  'Antalya',
-                  'Ardahan',
-                  'Artvin',
-                  'Aydın',
-                  'Balıkesir',
-                  'Bartın',
-                  'Batman',
-                  'Bayburt',
-                  'Bilecik',
-                  'Bingöl',
-                  'Bitlis',
-                  'Bolu',
-                  'Burdur',
-                  'Bursa',
-                  'Çanakkale',
-                  'Çankırı',
-                  'Çorum',
-                  'Denizli',
-                  'Diyarbakır',
-                  'Düzce',
-                  'Edirne',
-                  'Elazığ',
-                  'Erzincan',
-                  'Erzurum',
-                  'Eskişehir',
-                  'Gaziantep',
-                  'Giresun',
-                  'Gümüşhane',
-                  'Hakkâri',
-                  'Hatay',
-                  'Iğdır',
-                  'Isparta',
-                  'İstanbul',
-                  'İzmir',
-                  'Kahramanmaraş',
-                  'Karabük',
-                  'Karaman',
-                  'Kars',
-                  'Kastamonu',
-                  'Kayseri',
-                  'Kırıkkale',
-                  'Kırklareli',
-                  'Kırşehir',
-                  'Kilis',
-                  'Kocaeli',
-                  'Konya',
-                  'Kütahya',
-                  'Malatya',
-                  'Manisa',
-                  'Mardin',
-                  'Mersin',
-                  'Muğla',
-                  'Muş',
-                  'Nevşehir',
-                  'Niğde',
-                  'Ordu',
-                  'Osmaniye',
-                  'Rize',
-                  'Sakarya',
-                  'Samsun',
-                  'Siirt',
-                  'Sinop',
-                  'Sivas',
-                  'Şanlıurfa',
-                  'Şırnak',
-                  'Tekirdağ',
-                  'Tokat',
-                  'Trabzon',
-                  'Tunceli',
-                  'Uşak',
-                  'Van',
-                  'Yalova',
-                  'Yozgat',
-                  'Zonguldak'
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedCity = newValue!;
-                    _filterEventsByCity();
-                  });
-                },
-              ),
-              Expanded(
-                child: ListView(
-                  children: _filteredEvents
-                      .map((dynamic item) => buildEvents(
-                          title: item["name"] ?? "",
-                          place: item["city"] ?? "",
-                          time: item["date"] ?? "",
-                          imageUrl: item["imageUrl"] ?? "",
-                          widget: EventPage(
-                            event: item,
+              Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: DropdownButton<String>(
+                      value: _selectedCity,
+                      items: <String>[
+                        'All',
+                        'Adana',
+                        'Adıyaman',
+                        'Afyonkarahisar',
+                        'Ağrı',
+                        'Aksaray',
+                        'Amasya',
+                        'Ankara',
+                        'Antalya',
+                        'Ardahan',
+                        'Artvin',
+                        'Aydın',
+                        'Balıkesir',
+                        'Bartın',
+                        'Batman',
+                        'Bayburt',
+                        'Bilecik',
+                        'Bingöl',
+                        'Bitlis',
+                        'Bolu',
+                        'Burdur',
+                        'Bursa',
+                        'Çanakkale',
+                        'Çankırı',
+                        'Çorum',
+                        'Denizli',
+                        'Diyarbakır',
+                        'Düzce',
+                        'Edirne',
+                        'Elazığ',
+                        'Erzincan',
+                        'Erzurum',
+                        'Eskişehir',
+                        'Gaziantep',
+                      ].map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Text(
+                              value,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.black87,
+                              ),
+                            ),
                           ),
-                          context: context))
-                      .toList(),
-                ),
+                        );
+                      }).toList(),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          _selectedCity = newValue!;
+                          _filterEventsByCity();
+                        });
+                      },
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black87,
+                      ),
+                      underline: Container(
+                        height: 2,
+                        color: Color.fromARGB(255, 132, 186, 229),
+                      ),
+                      dropdownColor: Colors.white,
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    flex: 1,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Min Price',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          _minPrice = double.tryParse(value);
+                          _filterEventsByCityAndPrice();
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 16),
+                  Expanded(
+                    flex: 1,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Max Price',
+                        border: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        setState(() {
+                          _maxPrice = double.tryParse(value);
+                          _filterEventsByCityAndPrice();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16),
+              Expanded(
+                child: _filteredEvents.isEmpty
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.sentiment_dissatisfied,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              "Sorry, no results found.",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : ListView(
+                        children: _filteredEvents
+                            .map((dynamic item) => buildEvents(
+                                  title: item["name"] ?? "",
+                                  place: item["city"] ?? "",
+                                  time: item["date"] ?? "",
+                                  imageUrl: item["imageUrl"] ?? "",
+                                  widget: EventPage(
+                                    event: item,
+                                  ),
+                                  context: context,
+                                ))
+                            .toList(),
+                      ),
               ),
             ],
           ),

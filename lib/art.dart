@@ -50,17 +50,59 @@ class _ArtPageState extends State<ArtPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildBackHome(
-                  backHome: Icons.arrow_back,
-                  widget: HomePage(),
-                  context: context),
-              SizedBox(height: 24),
-              Text(
-                "Art Events",
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.bold,
+              Container(
+                width: double.infinity,
+                padding:
+                    EdgeInsets.only(top: 29, left: 16, right: 16, bottom: 5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Color(0xFF70B0C5),
+                      width: 2,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF70B0C5),
+                            Color(0xFF7ACE8C),
+                            Color(0xFFCBBC66),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    Text(
+                      "Art Events",
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromRGBO(90, 89, 92, 0.91),
+                        decoration: TextDecoration.none,
+                      ),
+                    ),
+                    SizedBox(width: 36),
+                  ],
                 ),
               ),
               SizedBox(height: 16),
@@ -244,17 +286,17 @@ Widget buildEvents(
                     fontWeight: FontWeight.w900,
                   ),
                 ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text(
-                      place,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
+                SizedBox(
+                  height: 3,
+                ),
+                Text(
+                  place,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
                 SizedBox(
                   height: 3,
                 ),

@@ -68,7 +68,32 @@ class _SearchBarState extends State<SearchBar> {
                 ),
                 Row(
                   children: [
-                    buildBackHome(backHome: Icons.arrow_back, widget: HomePage(), context: context),
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF70B0C5),
+                            Color(0xFF7ACE8C),
+                            Color(0xFFCBBC66),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                      ),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
                     Flexible(
                       flex: 1,
                       child: TextField(
@@ -96,26 +121,79 @@ class _SearchBarState extends State<SearchBar> {
             ),
           ),
           SizedBox(height: 20),
-          _events != null
+          _events != null && _events!.isNotEmpty
               ? ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   itemCount: _events!.length,
                   itemBuilder: (context, index) {
                     final event = _events![index];
-                    return ListTile(
-                      title: Text("${event['name']}"),
-                      subtitle: Text("${event['date']}, ${event['city']}"),
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return EventPage(event: event);
-                        }));
-                      },
+                    return Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.grey.shade300,
+                            width: 1.0,
+                          ),
+                        ),
+                      ),
+                      child: ListTile(
+                        leading: Container(
+                          width: 48,
+                          height: 48,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: NetworkImage(event['imageUrl']),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        title: Text(
+                          "${event['name']}",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text(
+                          "${event['date']}, ${event['city']}",
+                          style: TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return EventPage(event: event);
+                          }));
+                        },
+                      ),
                     );
                   },
                 )
-              : Container(),
+              : Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.sentiment_dissatisfied,
+                        size: 48,
+                        color: Colors.grey,
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        "Sorry, no results found.",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
         ],
       ),
     );
@@ -124,8 +202,8 @@ class _SearchBarState extends State<SearchBar> {
 
 Widget buildBackHome(
     {required IconData backHome,
-      required Widget widget,
-      required BuildContext context}) {
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
