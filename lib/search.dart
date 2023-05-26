@@ -14,12 +14,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
 
-class SearchBar extends StatefulWidget {
+class SearchButton extends StatefulWidget {
   @override
-  _SearchBarState createState() => _SearchBarState();
+  _SearchButtonState createState() => _SearchButtonState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchButtonState extends State<SearchButton> {
   TextEditingController _searchController = TextEditingController();
   List<dynamic> _events = [];
 

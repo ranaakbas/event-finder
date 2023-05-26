@@ -1,8 +1,5 @@
 import 'package:akbas_bas_eventfinderapp/Event1.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutterfire_ui/database.dart';
-import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class MusicPage extends StatefulWidget {
@@ -128,7 +125,7 @@ class _MusicPageState extends State<MusicPage> {
                       style: TextStyle(
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
-                        color: Color.fromRGBO(90, 89, 92, 0.91),
+                        color: Color(0xFF0A1034),
                         decoration: TextDecoration.none,
                       ),
                     ),
@@ -178,6 +175,54 @@ class _MusicPageState extends State<MusicPage> {
                         'Erzurum',
                         'Eskişehir',
                         'Gaziantep',
+                        'Giresun',
+                        'Gümüşhane',
+                        'Hakkâri',
+                        'Hatay',
+                        'Iğdır',
+                        'Isparta',
+                        'İstanbul',
+                        'İzmir',
+                        'Kahramanmaraş',
+                        'Karabük',
+                        'Karaman',
+                        'Kars',
+                        'Kastamonu',
+                        'Kayseri',
+                        'Kırıkkale',
+                        'Kırklareli',
+                        'Kırşehir',
+                        'Kilis',
+                        'Kocaeli',
+                        'Konya',
+                        'Kütahya',
+                        'Malatya',
+                        'Manisa',
+                        'Mardin',
+                        'Mersin',
+                        'Muğla',
+                        'Muş',
+                        'Nevşehir',
+                        'Niğde',
+                        'Ordu',
+                        'Osmaniye',
+                        'Rize',
+                        'Sakarya',
+                        'Samsun',
+                        'Siirt',
+                        'Sinop',
+                        'Sivas',
+                        'Şanlıurfa',
+                        'Şırnak',
+                        'Tekirdağ',
+                        'Tokat',
+                        'Trabzon',
+                        'Tunceli',
+                        'Uşak',
+                        'Van',
+                        'Yalova',
+                        'Yozgat',
+                        'Zonguldak'
                       ].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -366,9 +411,6 @@ Widget buildEvents(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
-              ),
-              SizedBox(
-                height: 3,
               ),
               SizedBox(
                 height: 3,
