@@ -22,6 +22,43 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:email_otp/email_otp.dart';
 import 'package:akbas_bas_eventfinderapp/payment.dart';
+import 'package:localstorage/localstorage.dart';
+
+class TicketObject {
+  final String name;
+  final String city;
+
+  TicketObject(this.name, this.city);
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'city': city};
+  }
+
+  factory TicketObject.fromJson(Map<String, dynamic> json) {
+    return TicketObject(json['name'], json['city']);
+  }
+}
+
+List<TicketObject> currentTickets = [];
+
+// Save the array of objects to local storage
+Future<void> saveArrayToLocalStorage() async {
+  final storage = LocalStorage('db');
+
+  await storage.setItem(
+      'tickets', currentTickets.map((obj) => obj.toJson()).toList());
+}
+
+// Retrieve the array of objects from local storage
+List<TicketObject> getArrayFromLocalStorage() {
+  final storage = LocalStorage('db');
+  List<dynamic>? storedArray = storage.getItem('tickets');
+  if (storedArray != null) {
+    return storedArray.map((json) => TicketObject.fromJson(json)).toList();
+  } else {
+    return [];
+  }
+}
 
 class Otp extends StatelessWidget {
   const Otp({
@@ -69,8 +106,10 @@ class Otp extends StatelessWidget {
 }
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({Key? key, required this.myauth}) : super(key: key);
+  OtpScreen({required this.myauth, this.ticketCount});
+
   final EmailOTP myauth;
+  final ticketCount;
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -83,6 +122,10 @@ class _OtpScreenState extends State<OtpScreen> {
   TextEditingController otp4Controller = TextEditingController();
 
   String otpController = "1234";
+  final LocalStorage storage = LocalStorage('db');
+  var event;
+
+  get ticketCount => ticketCount;
 
   @override
   Widget build(BuildContext context) {
@@ -142,13 +185,28 @@ class _OtpScreenState extends State<OtpScreen> {
                                 otp3Controller.text +
                                 otp4Controller.text) ==
                         true) {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Payment received."),
-                      ));
+                      final lastTicket = storage.getItem("lastEvent");
+
+                      final oldTickets = getArrayFromLocalStorage();
+                      print("oldTickets");
+                      print(oldTickets);
+                      if (currentTickets.isEmpty)
+                        currentTickets.addAll(oldTickets);
+
+                      currentTickets.add(TicketObject.fromJson(lastTicket));
+
+                      saveArrayToLocalStorage();
+
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Payment received."),
+                        ),
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => TicketPage(),
+                          builder: (context) =>
+                              TicketPage(ticketCount: widget.ticketCount),
                         ),
                       );
                     } else {

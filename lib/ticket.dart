@@ -1,129 +1,134 @@
 import 'package:akbas_bas_eventfinderapp/home.dart';
-import 'dart:ffi';
-import 'package:akbas_bas_eventfinderapp/membership.dart';
-import 'package:akbas_bas_eventfinderapp/profile.dart';
-import 'package:akbas_bas_eventfinderapp/music.dart';
-import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:flutterfire_ui/database.dart';
-import 'package:akbas_bas_eventfinderapp/art.dart';
-import 'package:akbas_bas_eventfinderapp/sport.dart';
-import 'package:akbas_bas_eventfinderapp/education&more.dart';
-import 'package:flutter/foundation.dart';
-import 'package:akbas_bas_eventfinderapp/search.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:akbas_bas_eventfinderapp/cinema.dart';
-import 'package:akbas_bas_eventfinderapp/theatre.dart';
-import 'package:akbas_bas_eventfinderapp/Event1.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:akbas_bas_eventfinderapp/payment.dart';
+import 'package:localstorage/localstorage.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketPage extends StatelessWidget {
+  TicketPage({this.ticketCount});
+  final ticketCount;
+  final LocalStorage storage = LocalStorage('db');
+  final userEmail = FirebaseAuth.instance.currentUser?.email;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildBackHome(
-                  backHome: Icons.arrow_back,
-                  widget: HomePage(),
-                  context: context),
-              SizedBox(height: 24),
-              Text(
-                'Ticket',
-                style: TextStyle(
-                  fontSize: 35,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.bold,
+    return FutureBuilder(
+      future: storage.ready,
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.data == true) {
+          Map<String, dynamic> data = storage.getItem('lastEvent') ?? {};
+          print('kamil here');
+          print(data);
+
+          return Scaffold(
+            body: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    buildBackHome(
+                        backHome: Icons.arrow_back,
+                        widget: HomePage(),
+                        context: context),
+                    SizedBox(height: 24),
+                    Text(
+                      "Ticket",
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Name: ${data["name"]}',
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Date: ${data["date"]}',
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Time: ${data["time"]}',
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Text(
+                      'Place, location: ${data["place"]}, ${data["city"]}',
+                      style: TextStyle(
+                        fontSize: 23,
+                        color: Color(0xFF0A1034),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // userEmail != null &&
+                    //         userEmail!.contains("@") &&
+                    //         userEmail!
+                    //             .split("@")[1]
+                    //             .toLowerCase()
+                    //             .contains("edu.tr")
+                    //     ? Text(
+                    //         'Total ticket price: $discountPayment ₺',
+                    //         style: TextStyle(
+                    //             fontSize: 23,
+                    //             color: Color(0xFF0A1034),
+                    //             fontWeight: FontWeight.w600),
+                    //       )
+                    //     : Text(
+                    //         'Total ticket price: $totalPayment ₺',
+                    //         style: TextStyle(
+                    //             fontSize: 23,
+                    //             color: Color(0xFF0A1034),
+                    //             fontWeight: FontWeight.w600),
+                    //       ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Center(
+                      child: QrImageView(
+                        data: '${data["name"].toString()+userEmail.toString()+ticketCount.toString()}',
+                        version: QrVersions.auto,
+                        size: 350.0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Event name:',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Event date:',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Event time:',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Event place, location:',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'Total ticket price:',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 15,
-              ),
-              Text(
-                'EVENT IMAGE',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Color(0xFF0A1034),
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                '(Please take a screenshot and show the screenshot to the attendant when logging in to the event.)',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

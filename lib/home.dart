@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SearchBar()),
+                                  builder: (context) => SearchButton()),
                             );
                           },
                           child: Icon(

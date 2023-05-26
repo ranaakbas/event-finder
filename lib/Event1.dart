@@ -7,6 +7,7 @@ import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:akbas_bas_eventfinderapp/ticket.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localstorage/localstorage.dart';
 
 class EventPage extends StatefulWidget {
   final dynamic event;
@@ -40,6 +41,8 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     final event = widget.event;
     final userEmail = FirebaseAuth.instance.currentUser?.email;
+    final LocalStorage storage = LocalStorage('db');
+
     //final ticketPrice = event["price"];
     //final totalPrice = ticketCount * ticketPrice;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -297,16 +300,20 @@ class _EventPageState extends State<EventPage> {
                                       height: 20,
                                     ),
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        print(event);
+
+                                        await storage.setItem(
+                                            "lastEvent", event);
+                                        // here son
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => PaymentPage(
-                                              ticketCount: ticketCount,
-                                              price: originalPrice,
-                                              discount: discountedPrice,
-                                            ),
-                                          ),
+                                              builder: (context) => PaymentPage(
+                                                    ticketCount: ticketCount,
+                                                    price: originalPrice,
+                                                    discount: discountedPrice,
+                                                  )),
                                         );
                                       },
                                       child: Container(
