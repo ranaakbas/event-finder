@@ -15,7 +15,8 @@ class PurchasesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LocalStorage storage = LocalStorage('db');
-    final sondurum = getArrayFromLocalStorage();
+    final List<TicketObject> sondurum = getArrayFromLocalStorage().cast<TicketObject>();
+
     return Scaffold(
       body: ListView(
         children: [
@@ -26,9 +27,10 @@ class PurchasesPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildBackHome(
-                      backHome: Icons.arrow_back,
-                      widget: ProfilePage(),
-                      context: context),
+                    backHome: Icons.arrow_back,
+                    widget: ProfilePage(),
+                    context: context,
+                  ),
                   SizedBox(height: 20),
                   Text(
                     "Purchases",
@@ -38,13 +40,44 @@ class PurchasesPage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
-    Text('${sondurum.map((obj) => obj.toJson()).toList()}'),
-
-
-
-    // print(sondurum.map((obj) => obj.toJson()).toList());
-
+                  SizedBox(height: 10),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: sondurum.length,
+                    itemBuilder: (context, index) {
+                      final ticket = sondurum[index];
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 10),
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.lightGreenAccent,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              ticket.name,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 10),
+                            Text(
+                              ticket.city,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            // Add more widgets to display other ticket information
+                          ],
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),
