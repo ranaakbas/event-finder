@@ -27,15 +27,39 @@ import 'package:localstorage/localstorage.dart';
 class TicketObject {
   final String name;
   final String city;
+  final String price;
+  final String place;
+  final String date;
+  final String time;
+  final String imageUrl;
+  final String ticketCount;
 
-  TicketObject(this.name, this.city);
+  TicketObject(this.name, this.city, this.price, this.place, this.time,
+      this.date, this.imageUrl, this.ticketCount);
 
   Map<String, dynamic> toJson() {
-    return {'name': name, 'city': city};
+    return {
+      'name': name,
+      'city': city,
+      'price': price,
+      'place': place,
+      'time': time,
+      'date': date,
+      'imageUrl': imageUrl,
+      'ticketCount': ticketCount
+    };
   }
 
   factory TicketObject.fromJson(Map<String, dynamic> json) {
-    return TicketObject(json['name'], json['city']);
+    return TicketObject(
+        json['name'],
+        json['city'],
+        json['price'],
+        json['place'],
+        json['time'],
+        json['date'],
+        json['imageUrl'],
+        json['ticketCount']);
   }
 }
 
@@ -106,10 +130,9 @@ class Otp extends StatelessWidget {
 }
 
 class OtpScreen extends StatefulWidget {
-  OtpScreen({required this.myauth, this.ticketCount});
+  OtpScreen({required this.myauth});
 
   final EmailOTP myauth;
-  final ticketCount;
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -125,8 +148,6 @@ class _OtpScreenState extends State<OtpScreen> {
   final LocalStorage storage = LocalStorage('db');
   var event;
 
-  get ticketCount => ticketCount;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -136,103 +157,149 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildBackHome(
-                  backHome: Icons.arrow_back,
-                  widget: HomePage(),
-                  context: context),
-              SizedBox(
-                height: 170,
-              ),
-              Center(
-                child: Text(
-                  "Enter the code sent to your e-mail.",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Color(0xFF0A1034),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 45,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
                 children: [
-                  Otp(
-                    otpController: otp1Controller,
-                  ),
-                  Otp(
-                    otpController: otp2Controller,
-                  ),
-                  Otp(
-                    otpController: otp3Controller,
-                  ),
-                  Otp(
-                    otpController: otp4Controller,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFF70B0C5),
+                                Color(0xFF7ACE8C),
+                                Color(0xFFCBBC66),
+                              ],
+                            ),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 185,
+                        ),
+                        Center(
+                          child: Text(
+                            "Enter the code sent to your e-mail.",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF0A1034),
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 45,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Otp(
+                              otpController: otp1Controller,
+                            ),
+                            Otp(
+                              otpController: otp2Controller,
+                            ),
+                            Otp(
+                              otpController: otp3Controller,
+                            ),
+                            Otp(
+                              otpController: otp4Controller,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 65,
+                        ),
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (await widget.myauth.verifyOTP(
+                                      otp: otp1Controller.text +
+                                          otp2Controller.text +
+                                          otp3Controller.text +
+                                          otp4Controller.text) ==
+                                  true) {
+                                final lastTicket = storage.getItem("lastEvent");
+                                print("Kamilos lastTicket");
+                                print(lastTicket);
+                                print(lastTicket.runtimeType);
+
+                                final oldTickets = getArrayFromLocalStorage();
+                                print("oldTickets");
+                                print(oldTickets);
+
+                                Map<String, dynamic> newMap = {};
+                                lastTicket.forEach((key, value) {
+                                  newMap[key.toString()] = value;
+                                });
+
+                                if (currentTickets.isEmpty)
+                                  currentTickets.addAll(oldTickets);
+                                currentTickets
+                                    .add(TicketObject.fromJson(newMap));
+
+                                saveArrayToLocalStorage();
+
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Payment received."),
+                                  ),
+                                );
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        TicketPage(),
+                                  ),
+                                );
+                              } else {
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(const SnackBar(
+                                  content: Text("Payment declined."),
+                                ));
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: EdgeInsets.all(10),
+                              backgroundColor: Color(0xFF70B0C5),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 60),
+                              child: Text(
+                                "Confirm",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 65,
-              ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () async {
-                    if (await widget.myauth.verifyOTP(
-                            otp: otp1Controller.text +
-                                otp2Controller.text +
-                                otp3Controller.text +
-                                otp4Controller.text) ==
-                        true) {
-                      final lastTicket = storage.getItem("lastEvent");
-
-                      final oldTickets = getArrayFromLocalStorage();
-                      print("oldTickets");
-                      print(oldTickets);
-                      if (currentTickets.isEmpty)
-                        currentTickets.addAll(oldTickets);
-
-                      currentTickets.add(TicketObject.fromJson(lastTicket));
-
-                      saveArrayToLocalStorage();
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Payment received."),
-                        ),
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              TicketPage(ticketCount: widget.ticketCount),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text("Payment declined."),
-                      ));
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    padding: EdgeInsets.all(10),
-                    backgroundColor: Color(0xFF70B0C5),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 60),
-                    child: Text(
-                      "Confirm",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
               ),
             ],
           ),
@@ -242,10 +309,11 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 }
 
-Widget buildBackHome(
-    {required IconData backHome,
-    required Widget widget,
-    required BuildContext context}) {
+Widget buildBackHome({
+  required IconData backHome,
+  required Widget widget,
+  required BuildContext context,
+}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {

@@ -342,7 +342,6 @@ class _PaymentPageState extends State<PaymentPage> {
                                           MaterialPageRoute(
                                             builder: (context) => OtpScreen(
                                               myauth: myauth,
-                                              ticketCount: widget.ticketCount,
                                             ),
                                           ),
                                         );
