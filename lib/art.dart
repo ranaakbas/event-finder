@@ -13,7 +13,8 @@ class ArtPage extends StatefulWidget {
 
 class _ArtPageState extends State<ArtPage> {
   String _selectedCity = "All";
-  List<dynamic> _filteredEvents = []; // Events to be shown, change on city change
+  List<dynamic> _filteredEvents =
+      []; // Events to be shown, change on city change
 
   double? _minPrice;
   double? _maxPrice;
@@ -99,15 +100,11 @@ class _ArtPageState extends State<ArtPage> {
                       height: 36,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF70B0C5),
-                            Color(0xFF7ACE8C),
-                            Color(0xFFCBBC66),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
+                        gradient: LinearGradient(colors: [
+                          Color(0xFF70B0C5),
+                          Color(0xFF7ACE8C),
+                          Color(0xFFCBBC66),
+                        ]),
                       ),
                       child: IconButton(
                         icon: Icon(

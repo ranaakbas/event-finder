@@ -105,8 +105,6 @@ class _SportPageState extends State<SportPage> {
                             Color(0xFF7ACE8C),
                             Color(0xFFCBBC66),
                           ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
                         ),
                       ),
                       child: IconButton(

@@ -17,6 +17,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   TextEditingController forgetPasswordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,72 +29,112 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildBackHome(
-                      backHome: Icons.arrow_back,
-                      widget: MembershipPage(),
-                      context: context),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 250.0,
-                  ),
-                  SizedBox(
-                    height: 15.0,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black12,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    margin: EdgeInsets.only(left: 30, right: 30, bottom: 10),
-                    padding:
-                        EdgeInsets.only(left: 15, right: 15, top: 3, bottom: 3),
-                    child: TextFormField(
-                      controller: forgetPasswordController,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: Icon(Icons.email),
-                        hintText: 'Email',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        var forgotEmail = forgetPasswordController.text.trim();
+                  Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              width: 36,
+                              height: 36,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF70B0C5),
+                                    Color(0xFF7ACE8C),
+                                    Color(0xFFCBBC66),
+                                  ],
+                                ),
+                              ),
+                              child: IconButton(
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  size: 20,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.center,
+                              height: 250.0,
+                            ),
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.black12,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              margin: EdgeInsets.only(
+                                  left: 30, right: 30, bottom: 10),
+                              padding: EdgeInsets.only(
+                                  left: 15, right: 15, top: 3, bottom: 3),
+                              child: TextFormField(
+                                controller: forgetPasswordController,
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  prefixIcon: Icon(Icons.email),
+                                  hintText: 'Email',
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 30.0,
+                            ),
+                            Center(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  var forgotEmail =
+                                      forgetPasswordController.text.trim();
 
-                        try {
-                          await FirebaseAuth.instance
-                              .sendPasswordResetEmail(email: forgotEmail)
-                              .then((value) => {
-                                    print("Email Sent!"),
-                                  });
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MembershipPage()),
-                          );
-                        } on FirebaseAuthException catch (e) {
-                          print("Error $e");
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                                  try {
+                                    await FirebaseAuth.instance
+                                        .sendPasswordResetEmail(
+                                            email: forgotEmail)
+                                        .then((value) => {
+                                              print("Email Sent!"),
+                                            });
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MembershipPage()),
+                                    );
+                                  } on FirebaseAuthException catch (e) {
+                                    print("Error $e");
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  padding: EdgeInsets.all(10),
+                                  backgroundColor: Color(0xFF70B0C5),
+                                ),
+                                child: Text(
+                                  "Forgot Password",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        padding: EdgeInsets.all(10),
-                        backgroundColor: Color(0xFF70B0C5),
                       ),
-                      child: Text(
-                        "Forgot Password",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                    ],
                   ),
                 ],
               ),
