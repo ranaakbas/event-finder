@@ -19,6 +19,11 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:table_calendar/table_calendar.dart';
 import 'Event1.dart';
+import 'calendar.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:akbas_bas_eventfinderapp/calendar.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,15 +56,16 @@ class _HomePageState extends State<HomePage> {
       throw Exception('API isteği başarısız oldu: ${response.statusCode}');
     }
   }
-
+ 
   @override
   void initState() {
     super.initState();
     fetchEvents();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -89,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SearchBar()),
+                                  builder: (context) => SearchButton()),
                             );
                           },
                           child: Icon(
@@ -157,7 +163,8 @@ class _HomePageState extends State<HomePage> {
                   buildUpcomingText(),
                   buildUpcoming(_events, context),
                   //
-                  buildCategories(),
+                 
+                  buildCategories(context),
 
                   buildNavigation(
                     text: "Music",
@@ -432,16 +439,40 @@ Widget buildUpcoming(List<dynamic> _events, BuildContext context) {
   );
 }
 
-Widget buildCategories() {
+Widget buildCategories(BuildContext context) {
   return Padding(
     padding: EdgeInsets.only(top: 15, bottom: 10),
-    child: Text(
-      "Categories",
-      style: TextStyle(
-          color: Color(0xFF0A1034), fontSize: 25, fontWeight: FontWeight.bold),
+    child: Row(
+      children: [
+        Text(
+          "Categories",
+          style: TextStyle(
+            color: Color(0xFF0A1034),
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(width: 10),
+       InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CalendarPage()),
+                            );
+                          },
+          child: Icon(
+            CupertinoIcons.calendar,
+            color: Color(0xFF0A1034),
+            size: 25,
+          ),
+        ),
+      ],
     ),
   );
 }
+
+
 
 Widget buildNavigation(
     {required String text,
