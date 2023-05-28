@@ -60,278 +60,334 @@ class _PaymentPageState extends State<PaymentPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    buildBackHome(
-                        backHome: Icons.arrow_back,
-                        widget: HomePage(),
-                        context: context),
-                    SizedBox(
-                      height: 125,
-                    ),
-                    Text(
-                      "Payment",
-                      style: TextStyle(
-                        fontSize: 35,
-                        color: Color(0xFF0A1034),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    userEmail != null &&
-                            userEmail!.contains("@") &&
-                            userEmail!
-                                .split("@")[1]
-                                .toLowerCase()
-                                .contains("edu.tr")
-                        ? Text(
-                            '$discountPayment ₺',
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          )
-                        : Text(
-                            '$totalPayment ₺',
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
-                          ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Full Name",
-                          prefixIcon: Icon(Icons.person_outline_sharp),
-                          suffixIcon: hasError
-                              ? Icon(
-                                  Icons.priority_high_rounded,
-                                  color: Colors.red,
-                                )
-                              : null,
-                        ),
-                        style: TextStyle(
-                          color: Color(0xFF0A1034),
-                        ),
-                        validator: (value) {
-                          if (value?.isEmpty ?? true) {
-                            setState(() {
-                              hasError = true; // Set error status
-                            });
-                            return null;
-                          }
-                          setState(() {
-                            hasError = false; // Reset error status
-                          });
-                          return null;
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: TextFormField(
-                        validator: (value) {
-                          if (value?.isEmpty ?? true) {
-                            setState(() {
-                              hasError = true; // Set error status
-                            });
-                            return null;
-                          }
-                          setState(() {
-                            hasError = false; // Reset error status
-                          });
-                          return null;
-                        },
-                        controller: cardNumberController,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(16),
-                          CardNumberInputFormatter(),
-                        ],
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Card Number",
-                          prefixIcon: Icon(Icons.credit_card),
-                          suffixIcon: hasError
-                              ? Icon(
-                                  Icons.priority_high_rounded,
-                                  color: Colors.red,
-                                )
-                              : null,
-                        ),
-                        style: TextStyle(
-                          color: Color(0xFF0A1034),
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Row(
+                    Column(
                       children: [
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(3),
-                                CardNumberInputFormatter(),
-                              ],
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "CVV",
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Icon(Icons.calendar_view_day),
-                                ),
-                                suffixIcon: hasError
-                                    ? Icon(
-                                        Icons.priority_high_rounded,
-                                        color: Colors.red,
-                                      )
-                                    : null,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 30,
                               ),
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  setState(() {
-                                    hasError = true; // Set error status
-                                  });
-                                  return null;
-                                }
-                                setState(() {
-                                  hasError = false; // Reset error status
-                                });
-                                return null;
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.black12,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.digitsOnly,
-                                LengthLimitingTextInputFormatter(4),
-                                CardNumberInputFormatter(),
-                                CardMonthInputFormatter(),
-                              ],
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                hintText: "MM/YY",
-                                prefixIcon: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  child: Icon(Icons.calendar_today),
+                              Container(
+                                width: 36,
+                                height: 36,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xFF70B0C5),
+                                      Color(0xFF7ACE8C),
+                                      Color(0xFFCBBC66),
+                                    ],
+                                  ),
                                 ),
-                                suffixIcon: hasError
-                                    ? Icon(
-                                        Icons.priority_high_rounded,
-                                        color: Colors.red,
-                                      )
-                                    : null,
+                                child: IconButton(
+                                  icon: Icon(
+                                    Icons.arrow_back,
+                                    size: 20,
+                                    color: Colors.white,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
                               ),
-                              validator: (value) {
-                                if (value?.isEmpty ?? true) {
-                                  setState(() {
-                                    hasError = true; // Set error status
-                                  });
-                                  return null;
-                                }
-                                setState(() {
-                                  hasError = false; // Reset error status
-                                });
-                                return null;
-                              },
-                            ),
+                              SizedBox(
+                                height: 125,
+                              ),
+                              Text(
+                                "Payment",
+                                style: TextStyle(
+                                  fontSize: 35,
+                                  color: Color(0xFF0A1034),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              userEmail != null &&
+                                      userEmail!.contains("@") &&
+                                      userEmail!
+                                          .split("@")[1]
+                                          .toLowerCase()
+                                          .contains("edu.tr")
+                                  ? Text(
+                                      '$discountPayment ₺',
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  : Text(
+                                      '$totalPayment ₺',
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: TextFormField(
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Full Name",
+                                    prefixIcon:
+                                        Icon(Icons.person_outline_sharp),
+                                    suffixIcon: hasError
+                                        ? Icon(
+                                            Icons.priority_high_rounded,
+                                            color: Colors.red,
+                                          )
+                                        : null,
+                                  ),
+                                  style: TextStyle(
+                                    color: Color(0xFF0A1034),
+                                  ),
+                                  validator: (value) {
+                                    if (value?.isEmpty ?? true) {
+                                      setState(() {
+                                        hasError = true; // Set error status
+                                      });
+                                      return null;
+                                    }
+                                    setState(() {
+                                      hasError = false; // Reset error status
+                                    });
+                                    return null;
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black12,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: TextFormField(
+                                  validator: (value) {
+                                    if (value?.isEmpty ?? true) {
+                                      setState(() {
+                                        hasError = true; // Set error status
+                                      });
+                                      return null;
+                                    }
+                                    setState(() {
+                                      hasError = false; // Reset error status
+                                    });
+                                    return null;
+                                  },
+                                  controller: cardNumberController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(16),
+                                    CardNumberInputFormatter(),
+                                  ],
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: "Card Number",
+                                    prefixIcon: Icon(Icons.credit_card),
+                                    suffixIcon: hasError
+                                        ? Icon(
+                                            Icons.priority_high_rounded,
+                                            color: Colors.red,
+                                          )
+                                        : null,
+                                  ),
+                                  style: TextStyle(
+                                    color: Color(0xFF0A1034),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(3),
+                                          CardNumberInputFormatter(),
+                                        ],
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "CVV",
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child:
+                                                Icon(Icons.calendar_view_day),
+                                          ),
+                                          suffixIcon: hasError
+                                              ? Icon(
+                                                  Icons.priority_high_rounded,
+                                                  color: Colors.red,
+                                                )
+                                              : null,
+                                        ),
+                                        validator: (value) {
+                                          if (value?.isEmpty ?? true) {
+                                            setState(() {
+                                              hasError =
+                                                  true; // Set error status
+                                            });
+                                            return null;
+                                          }
+                                          setState(() {
+                                            hasError =
+                                                false; // Reset error status
+                                          });
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter
+                                              .digitsOnly,
+                                          LengthLimitingTextInputFormatter(4),
+                                          CardNumberInputFormatter(),
+                                          CardMonthInputFormatter(),
+                                        ],
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: "MM/YY",
+                                          prefixIcon: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            child: Icon(Icons.calendar_today),
+                                          ),
+                                          suffixIcon: hasError
+                                              ? Icon(
+                                                  Icons.priority_high_rounded,
+                                                  color: Colors.red,
+                                                )
+                                              : null,
+                                        ),
+                                        validator: (value) {
+                                          if (value?.isEmpty ?? true) {
+                                            setState(() {
+                                              hasError =
+                                                  true; // Set error status
+                                            });
+                                            return null;
+                                          }
+                                          setState(() {
+                                            hasError =
+                                                false; // Reset error status
+                                          });
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 25,
+                              ),
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: () async {
+                                    if (_formKey.currentState?.validate() ??
+                                        false) {
+                                      myauth.setConfig(
+                                        appEmail: "contact@hdevcoder.com",
+                                        userEmail: FirebaseAuth
+                                            .instance.currentUser?.email,
+                                        otpLength: 4,
+                                        otpType: OTPType.digitsOnly,
+                                      );
+                                      bool otpSent = await myauth.sendOTP();
+                                      if (otpSent && hasError == false) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text("Code sent to your mail."),
+                                          ),
+                                        );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => OtpScreen(
+                                              myauth: myauth,
+                                            ),
+                                          ),
+                                        );
+                                      } else if (hasError == true) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                "Please fill in all fields."),
+                                          ),
+                                        );
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content:
+                                                Text("Sign in to buy tickets."),
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    backgroundColor: Color(0xFF70B0C5),
+                                  ),
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 60),
+                                    child: Text(
+                                      "Pay",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          if (_formKey.currentState?.validate() ?? false) {
-                            myauth.setConfig(
-                              appEmail: "contact@hdevcoder.com",
-                              userEmail:
-                                  FirebaseAuth.instance.currentUser?.email,
-                              otpLength: 4,
-                              otpType: OTPType.digitsOnly,
-                            );
-                            bool otpSent = await myauth.sendOTP();
-                            if (otpSent && hasError == false) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Code sent to your mail."),
-                                ),
-                              );
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => OtpScreen(
-                                    myauth: myauth,
-                                  ),
-                                ),
-                              );
-                            } else if (hasError == true) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Please fill in all fields."),
-                                ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Sign in to buy tickets."),
-                                ),
-                              );
-                            }
-                          }
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          padding: EdgeInsets.all(10),
-                          backgroundColor: Color(0xFF70B0C5),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 60),
-                          child: Text(
-                            "Pay",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
                     ),
                   ],
                 ),

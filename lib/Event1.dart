@@ -7,6 +7,7 @@ import 'package:akbas_bas_eventfinderapp/home.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:akbas_bas_eventfinderapp/ticket.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:localstorage/localstorage.dart';
 
 class EventPage extends StatefulWidget {
   final dynamic event;
@@ -40,6 +41,8 @@ class _EventPageState extends State<EventPage> {
   Widget build(BuildContext context) {
     final event = widget.event;
     final userEmail = FirebaseAuth.instance.currentUser?.email;
+    final LocalStorage storage = LocalStorage('db');
+
     //final ticketPrice = event["price"];
     //final totalPrice = ticketCount * ticketPrice;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -85,11 +88,35 @@ class _EventPageState extends State<EventPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                buildBackHome(
-                                    backHome: Icons.arrow_back,
-                                    widget: HomePage(),
-                                    context: context,
-                                    category: event["category"]),
+                                SizedBox(
+                                  height: 16,
+                                ),
+                                Container(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color(0xFF70B0C5),
+                                        Color(0xFF7ACE8C),
+                                        Color(0xFFCBBC66),
+                                      ],
+                                      begin: Alignment.topCenter,
+                                      end: Alignment.bottomCenter,
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      Icons.arrow_back,
+                                      size: 20,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -297,16 +324,30 @@ class _EventPageState extends State<EventPage> {
                                       height: 20,
                                     ),
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        print(event);
+
+                                        final newEvent = {
+                                          ...event,
+                                          'ticketCount': ticketCount != null
+                                              ? ticketCount.toString()
+                                              : ""
+                                        };
+
+                                        print(newEvent);
+
+                                        await storage.setItem(
+                                            "lastEvent", newEvent);
+
+                                        // here son
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => PaymentPage(
-                                              ticketCount: ticketCount,
-                                              price: originalPrice,
-                                              discount: discountedPrice,
-                                            ),
-                                          ),
+                                              builder: (context) => PaymentPage(
+                                                    ticketCount: ticketCount,
+                                                    price: originalPrice,
+                                                    discount: discountedPrice,
+                                                  )),
                                         );
                                       },
                                       child: Container(
@@ -364,15 +405,12 @@ Widget buildBackHome({
   required IconData backHome,
   required Widget widget,
   required BuildContext context,
-  required String category,
 }) {
   return GestureDetector(
     onTap: () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => widget),
-        (Route<dynamic> route) => route.isFirst,
-      );
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return widget;
+      }));
     },
     child: Column(
       children: [

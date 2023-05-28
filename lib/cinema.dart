@@ -48,21 +48,21 @@ class _CinemaPageState extends State<CinemaPage> {
       setState(() {
         _filteredEvents = widget.events
             .where((event) =>
-        (_minPrice == null ||
-            _getNumericPrice(event['price'])! >= _minPrice!) &&
-            (_maxPrice == null ||
-                _getNumericPrice(event['price'])! <= _maxPrice!))
+                (_minPrice == null ||
+                    _getNumericPrice(event['price'])! >= _minPrice!) &&
+                (_maxPrice == null ||
+                    _getNumericPrice(event['price'])! <= _maxPrice!))
             .toList();
       });
     } else {
       setState(() {
         _filteredEvents = widget.events
             .where((event) =>
-        event['city'] == _selectedCity &&
-            (_minPrice == null ||
-                _getNumericPrice(event['price'])! >= _minPrice!) &&
-            (_maxPrice == null ||
-                _getNumericPrice(event['price'])! <= _maxPrice!))
+                event['city'] == _selectedCity &&
+                (_minPrice == null ||
+                    _getNumericPrice(event['price'])! >= _minPrice!) &&
+                (_maxPrice == null ||
+                    _getNumericPrice(event['price'])! <= _maxPrice!))
             .toList();
       });
     }
@@ -81,7 +81,7 @@ class _CinemaPageState extends State<CinemaPage> {
               Container(
                 width: double.infinity,
                 padding:
-                EdgeInsets.only(top: 29, left: 16, right: 16, bottom: 5),
+                    EdgeInsets.only(top: 29, left: 16, right: 16, bottom: 5),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border(
@@ -105,8 +105,6 @@ class _CinemaPageState extends State<CinemaPage> {
                             Color(0xFF7ACE8C),
                             Color(0xFFCBBC66),
                           ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
                         ),
                       ),
                       child: IconButton(
@@ -295,41 +293,41 @@ class _CinemaPageState extends State<CinemaPage> {
               Expanded(
                 child: _filteredEvents.isEmpty
                     ? Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.sentiment_dissatisfied,
-                        size: 48,
-                        color: Colors.grey,
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        "Sorry, no results found.",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
+                        alignment: Alignment.center,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.sentiment_dissatisfied,
+                              size: 48,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              "Sorry, no results found.",
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                )
+                      )
                     : ListView(
-                  children: _filteredEvents
-                      .map((dynamic item) => buildEvents(
-                    title: item["name"] ?? "",
-                    place: item["city"] ?? "",
-                    time: item["date"] ?? "",
-                    imageUrl: item["imageUrl"] ?? "",
-                    widget: EventPage(
-                      event: item,
-                    ),
-                    context: context,
-                  ))
-                      .toList(),
-                ),
+                        children: _filteredEvents
+                            .map((dynamic item) => buildEvents(
+                                  title: item["name"] ?? "",
+                                  place: item["city"] ?? "",
+                                  time: item["date"] ?? "",
+                                  imageUrl: item["imageUrl"] ?? "",
+                                  widget: EventPage(
+                                    event: item,
+                                  ),
+                                  context: context,
+                                ))
+                            .toList(),
+                      ),
               ),
             ],
           ),
@@ -341,8 +339,8 @@ class _CinemaPageState extends State<CinemaPage> {
 
 Widget buildBackHome(
     {required IconData backHome,
-      required Widget widget,
-      required BuildContext context}) {
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -363,11 +361,11 @@ Widget buildBackHome(
 
 Widget buildEvents(
     {required String title,
-      required String time,
-      required String place,
-      required String imageUrl, // added imageUrl parameter
-      required Widget widget,
-      required BuildContext context}) {
+    required String time,
+    required String place,
+    required String imageUrl, // added imageUrl parameter
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -383,7 +381,7 @@ Widget buildEvents(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           image:
-          DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
+              DecorationImage(image: NetworkImage(imageUrl), fit: BoxFit.cover),
         ),
         child: Center(
           child: Column(
