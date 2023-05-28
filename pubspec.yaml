@@ -44,7 +44,7 @@ dependencies:
   flutter_clean_calendar: ^1.1.0
   
   localstorage: ^4.0.0+1
-  qr_flutter: ^4.1.0
+  qr_flutter: ^4.0.0
 
 dev_dependencies:
   flutter_test:

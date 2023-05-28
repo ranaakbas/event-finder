@@ -9,7 +9,6 @@ import 'package:localstorage/localstorage.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class TicketPage extends StatelessWidget {
-
   final LocalStorage storage = LocalStorage('db');
   final userEmail = FirebaseAuth.instance.currentUser?.email;
 
@@ -23,12 +22,9 @@ class TicketPage extends StatelessWidget {
           print("kamil ticket");
           print(data);
 
-
-
           final ticketCount = data['ticketCount'] != null
               ? int.tryParse(data['ticketCount'])
               : 1;
-
 
           var originalPriceString = data["price"].toString();
           var numericString =
@@ -50,8 +46,7 @@ class TicketPage extends StatelessWidget {
                             widget: HomePage(),
                             context: context),
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 16.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -136,7 +131,7 @@ class TicketPage extends StatelessWidget {
                                 height: 30,
                               ),
                               Center(
-                                child: QrImageView(
+                                child: QrImage(
                                   data:
                                       '${data["name"].toString() + userEmail.toString() + ticketCount.toString()}',
                                   version: QrVersions.auto,

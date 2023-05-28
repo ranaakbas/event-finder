@@ -29,7 +29,6 @@ class PurchasesPage extends StatelessWidget {
           print("tickets purchase");
           print(tickets);
 
-
           return Scaffold(
             body: ListView(
               children: [
@@ -102,143 +101,140 @@ class PurchasesPage extends StatelessWidget {
                         SizedBox(height: 10),
                         tickets.isEmpty
                             ? Container(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Icon(
-                                Icons.sentiment_dissatisfied,
-                                size: 48,
-                                color: Colors.grey,
-                              ),
-                              SizedBox(height: 16),
-                              Text(
-                                "You have never bought a ticket before.",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                            : ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: tickets.length,
-                          itemBuilder: (context, index) {
-                            Map<String, dynamic> ticket = tickets[index];
-
-                            var originalPriceString = ticket['price'];
-                            var numericString = originalPriceString
-                                .replaceAll(RegExp(r'[^0-9]'), '');
-                            var originalPrice =
-                            double.parse(numericString);
-                            var discountedPrice =
-                                originalPrice * 0.8; // %20 indirim
-                            final ticketCount = ticket['ticketCount'] != null
-                                ? int.tryParse(ticket['ticketCount'])
-                                : 1;
-
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 10),
-                              padding: EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(6),
-                                shape: BoxShape.rectangle,
-                                image: DecorationImage(
-                                  image: NetworkImage(ticket['imageUrl']),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment:
-                                CrossAxisAlignment.start,
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            ticket['name'],
-                                            style: TextStyle(
-                                              color: Color(0xFF0A1034),
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            '${ticket['date']}, ${ticket['time']}',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xFF0A1034),
-                                                fontWeight:
-                                                FontWeight.w600),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text(
-                                            '${ticket['place']}, ${ticket['city']}',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xFF0A1034),
-                                                fontWeight:
-                                                FontWeight.w600),
-                                          ),
-                                          SizedBox(height: 10),
-                                          userEmail != null &&
-                                              userEmail!
-                                                  .contains("@") &&
-                                              userEmail!
-                                                  .split("@")[1]
-                                                  .toLowerCase()
-                                                  .contains("edu.tr")
-                                              ? Text(
-                                            '${discountedPrice *
-                                                ticketCount!} ₺',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(
-                                                    0xFF0A1034),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w600),
-                                          )
-                                              : Text(
-                                            '${originalPrice *
-                                                ticketCount!} ₺',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(
-                                                    0xFF0A1034),
-                                                fontWeight:
-                                                FontWeight
-                                                    .w600),
-                                          ),
-                                          QrImageView(
-                                            data:
-                                            '${ticket['name'] +
-                                                userEmail.toString() +
-                                                ticketCount.toString()}',
-                                            version: QrVersions.auto,
-                                            size: 100.0,
-                                          ),
-                                        ],
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white54,
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      height: 40,
+                                    ),
+                                    Icon(
+                                      Icons.sentiment_dissatisfied,
+                                      size: 48,
+                                      color: Colors.grey,
+                                    ),
+                                    SizedBox(height: 16),
+                                    Text(
+                                      "You have never bought a ticket before.",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              )
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: tickets.length,
+                                itemBuilder: (context, index) {
+                                  Map<String, dynamic> ticket = tickets[index];
+
+                                  var originalPriceString = ticket['price'];
+                                  var numericString = originalPriceString
+                                      .replaceAll(RegExp(r'[^0-9]'), '');
+                                  var originalPrice =
+                                      double.parse(numericString);
+                                  var discountedPrice =
+                                      originalPrice * 0.8; // %20 indirim
+                                  final ticketCount =
+                                      ticket['ticketCount'] != null
+                                          ? int.tryParse(ticket['ticketCount'])
+                                          : 1;
+
+                                  return Container(
+                                    margin: EdgeInsets.only(bottom: 10),
+                                    padding: EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(6),
+                                      shape: BoxShape.rectangle,
+                                      image: DecorationImage(
+                                        image: NetworkImage(ticket['imageUrl']),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Center(
+                                          child: Container(
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  ticket['name'],
+                                                  style: TextStyle(
+                                                    color: Color(0xFF0A1034),
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 10),
+                                                Text(
+                                                  '${ticket['date']}, ${ticket['time']}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color(0xFF0A1034),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                SizedBox(height: 10),
+                                                Text(
+                                                  '${ticket['place']}, ${ticket['city']}',
+                                                  style: TextStyle(
+                                                      fontSize: 16,
+                                                      color: Color(0xFF0A1034),
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                SizedBox(height: 10),
+                                                userEmail != null &&
+                                                        userEmail!
+                                                            .contains("@") &&
+                                                        userEmail!
+                                                            .split("@")[1]
+                                                            .toLowerCase()
+                                                            .contains("edu.tr")
+                                                    ? Text(
+                                                        '${discountedPrice * ticketCount!} ₺',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color(
+                                                                0xFF0A1034),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      )
+                                                    : Text(
+                                                        '${originalPrice * ticketCount!} ₺',
+                                                        style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Color(
+                                                                0xFF0A1034),
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600),
+                                                      ),
+                                                QrImage(
+                                                  data:
+                                                      '${ticket['name'] + userEmail.toString() + ticketCount.toString()}',
+                                                  version: QrVersions.auto,
+                                                  size: 100.0,
+                                                ),
+                                              ],
+                                            ),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white54,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ],
                     ),
                   ),
@@ -254,9 +250,10 @@ class PurchasesPage extends StatelessWidget {
   }
 }
 
-Widget buildBackHome({required IconData backHome,
-  required Widget widget,
-  required BuildContext context}) {
+Widget buildBackHome(
+    {required IconData backHome,
+    required Widget widget,
+    required BuildContext context}) {
   return GestureDetector(
     onTap: () {
       Navigator.push(context, MaterialPageRoute(builder: (context) {

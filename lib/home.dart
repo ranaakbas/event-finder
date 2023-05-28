@@ -23,16 +23,12 @@ import 'calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:akbas_bas_eventfinderapp/calendar.dart';
 
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
-
-
 
 class _HomePageState extends State<HomePage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
@@ -56,18 +52,17 @@ class _HomePageState extends State<HomePage> {
       throw Exception('API isteği başarısız oldu: ${response.statusCode}');
     }
   }
- 
+
   @override
   void initState() {
     super.initState();
     fetchEvents();
   }
- 
+
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromARGB(255, 250, 255, 239),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -163,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                   buildUpcomingText(),
                   buildUpcoming(_events, context),
                   //
-                 
+
                   buildCategories(context),
 
                   buildNavigation(
@@ -453,14 +448,13 @@ Widget buildCategories(BuildContext context) {
           ),
         ),
         SizedBox(width: 10),
-       InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => CalendarPage()),
-                            );
-                          },
+        InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CalendarPage()),
+            );
+          },
           child: Icon(
             CupertinoIcons.calendar,
             color: Color(0xFF0A1034),
@@ -471,8 +465,6 @@ Widget buildCategories(BuildContext context) {
     ),
   );
 }
-
-
 
 Widget buildNavigation(
     {required String text,
